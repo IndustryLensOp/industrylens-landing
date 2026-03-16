@@ -40,7 +40,7 @@
   .price-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.35);margin-bottom:8px;}
   .price-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .price-sub{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:24px;}
-  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;transition:opacity 0.15s;margin-bottom:12px;cursor:pointer;}
+  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;border:none;transition:opacity 0.15s;margin-bottom:12px;cursor:pointer;font-family:'Inter',sans-serif;}
   .buy-btn:hover{opacity:0.88;}
   .card-divider{height:1px;background:var(--border-dark);margin:16px 0;}
   .call-label{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;margin-bottom:12px;}
@@ -88,9 +88,9 @@
         <div class="price-label">Full report &mdash; one-time</div>
         <div class="price-val">&euro;100</div>
         <div class="price-sub">15 pages &middot; Delivered immediately</div>
-        <a href="#" class="buy-btn" id="buyBtn">Get the Full Report &rarr;</a>
+        <button class="buy-btn" id="buyBtn">Get the Full Report &rarr;</button>
         <div class="card-divider"></div>
-        <div class="call-label">Or book a 20-minute call first &mdash; free</div>
+        <div class="call-label">Or book a 30-minute call first &mdash; free</div>
         <div class="tidycal-wrap">
           <div class="tidycal-embed" data-path="industrylens/30-minute-meeting"></div>
           <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async><\/script>
@@ -108,25 +108,45 @@
   const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
   const params=new URLSearchParams(window.location.search);
   let leadId=params.get('lid')||sessionStorage.getItem('il_lead_id');
+
   async function updateLead(fields){
     if(!leadId)return;
-    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
+    try{
+      await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{
+        method:'PATCH',
+        headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},
+        body:JSON.stringify(fields)
+      });
+    }catch(e){console.warn(e);}
   }
-  document.getElementById('dlBtn').addEventListener('click',()=>updateLead({report_downloaded_at:new Date().toISOString()}));
-  document.getElementById('buyBtn').addEventListener('click',function(e){
-    e.preventDefault();
-    updateLead({full_report_clicked_at:new Date().toISOString()}).then(()=>{
-      const sp=new URLSearchParams();
-      const ref=params.get('ref')||'';
-      const src=params.get('utm_source')||'';
-      const med=params.get('utm_medium')||'';
-      if(ref)sp.set('client_reference_id',ref);
-      if(src)sp.set('utm_source',src);
-      if(med)sp.set('utm_medium',med);
-      setTimeout(()=>{window.location.href='https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01?'+sp.toString();},150);
-    });
+
+  // PDF download tracking
+  document.getElementById('dlBtn').addEventListener('click',()=>{
+    updateLead({report_downloaded_at:new Date().toISOString()});
   });
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='tidycal:booking_complete')updateLead({call_booked_at:new Date().toISOString()});});
+
+  // Stripe CTA — track then redirect
+  document.getElementById('buyBtn').addEventListener('click', async function(){
+    await updateLead({full_report_clicked_at:new Date().toISOString()});
+    const sp=new URLSearchParams();
+    const ref=params.get('ref')||'';
+    const src=params.get('utm_source')||'';
+    const med=params.get('utm_medium')||'';
+    const camp=params.get('utm_campaign')||'';
+    if(ref) sp.set('client_reference_id',ref);
+    if(src) sp.set('utm_source',src);
+    if(med) sp.set('utm_medium',med);
+    if(camp) sp.set('utm_campaign',camp);
+    const qs=sp.toString();
+    window.location.href='https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01'+(qs?'?'+qs:'');
+  });
+
+  // TidyCal booking complete
+  window.addEventListener('message',function(e){
+    if(e.data&&e.data.type==='tidycal:booking_complete'){
+      updateLead({call_booked_at:new Date().toISOString()});
+    }
+  });
 </script>
 </body>
 </html>
