@@ -59,7 +59,6 @@
   </a>
   <a href="/msp-snapshot" class="nav-back">&larr; Back</a>
 </nav>
-
 <div class="ty-hero">
   <div class="ty-hero-inner">
     <div class="ty-check">&#10003;</div>
@@ -69,7 +68,6 @@
     <p class="dl-hint">PDF &middot; 4 pages &middot; Free</p>
   </div>
 </div>
-
 <section class="upsell-section">
   <div class="section-divider"></div>
   <div class="upsell-grid">
@@ -88,57 +86,39 @@
     <div class="upsell-card">
       <div class="upsell-card-inner">
         <div class="price-label">Full report &mdash; one-time</div>
-        <div class="price-val">&euro;100</div>
+        <div class="price-val">&euro;250</div>
         <div class="price-sub">15 pages &middot; Delivered immediately</div>
         <button class="buy-btn" id="buyBtn">Get the Full Report &rarr;</button>
-        <a href="https://dashboard.industry-lens.com/signup" class="trial-btn" id="trialBtn" target="_blank" rel="noopener">Start a free 30-day trial instead</a>
+        <a href="https://dashboard.industry-lens.com/signup" class="trial-btn" target="_blank" rel="noopener">Start a free 30-day trial instead</a>
         <p class="trial-hint">No credit card required &middot; Cancel anytime</p>
       </div>
     </div>
   </div>
 </section>
-
 <footer class="ty-footer">
   <a href="https://industry-lens.com" class="footer-logo">IndustryLens</a>
   <a href="mailto:naveed@industry-lens.com" class="footer-email">naveed@industry-lens.com</a>
 </footer>
-
 <script>
   const SUPABASE_URL='https://lmgzpvpkztnmqipzrnmf.supabase.co';
   const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
   const params=new URLSearchParams(window.location.search);
   let leadId=params.get('lid')||sessionStorage.getItem('il_lead_id');
-
   async function updateLead(fields){
     if(!leadId)return;
-    try{
-      await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{
-        method:'PATCH',
-        headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},
-        body:JSON.stringify(fields)
-      });
-    }catch(e){console.warn(e);}
+    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
   }
-
-  // PDF download tracking
-  document.getElementById('dlBtn').addEventListener('click',()=>{
-    updateLead({report_downloaded_at:new Date().toISOString()});
-  });
-
-  // Stripe — track then open in new tab
-  document.getElementById('buyBtn').addEventListener('click', async function(){
+  document.getElementById('dlBtn').addEventListener('click',()=>updateLead({report_downloaded_at:new Date().toISOString()}));
+  document.getElementById('buyBtn').addEventListener('click',async function(){
     await updateLead({full_report_clicked_at:new Date().toISOString()});
     const sp=new URLSearchParams();
-    const ref=params.get('ref')||'';
-    const src=params.get('utm_source')||'';
-    const med=params.get('utm_medium')||'';
-    const camp=params.get('utm_campaign')||'';
-    if(ref) sp.set('client_reference_id',ref);
-    if(src) sp.set('utm_source',src);
-    if(med) sp.set('utm_medium',med);
-    if(camp) sp.set('utm_campaign',camp);
+    const ref=params.get('ref')||'',src=params.get('utm_source')||'',med=params.get('utm_medium')||'',camp=params.get('utm_campaign')||'';
+    if(ref)sp.set('client_reference_id',ref);
+    if(src)sp.set('utm_source',src);
+    if(med)sp.set('utm_medium',med);
+    if(camp)sp.set('utm_campaign',camp);
     const qs=sp.toString();
-    window.open('https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01'+(qs?'?'+qs:''), '_blank', 'noopener');
+    window.open('https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01'+(qs?'?'+qs:''),'_blank','noopener');
   });
 </script>
 </body>
