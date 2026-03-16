@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://lmgzpvpkztnmqipzrnmf.supabase.co/storage/v1/object/public/favicons/Industry%20Lens%20logo%20transparent.png">
 <title>Your MSP Snapshot Is Ready | IndustryLens</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -40,11 +41,12 @@
   .price-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.35);margin-bottom:8px;}
   .price-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .price-sub{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:24px;}
-  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;border:none;transition:opacity 0.15s;margin-bottom:16px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;border:none;transition:opacity 0.15s;margin-bottom:12px;cursor:pointer;font-family:'Inter',sans-serif;}
   .buy-btn:hover{opacity:0.88;}
-  .trial-btn{display:block;width:100%;text-align:center;padding:13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.8);text-decoration:none;transition:background 0.15s,border-color 0.15s;}
+  .trial-btn{display:block;width:100%;text-align:center;padding:13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.8);text-decoration:none;transition:background 0.15s,border-color 0.15s;margin-bottom:10px;}
   .trial-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);}
-  .trial-hint{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:8px;}
+  .call-btn{display:block;width:100%;text-align:center;padding:13px;background:transparent;border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-decoration:none;transition:border-color 0.15s,color 0.15s;}
+  .call-btn:hover{border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);}
   .ty-footer{border-top:1px solid var(--border-dark);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
   .ty-footer a.footer-logo{font-size:15px;font-weight:700;color:var(--white);text-decoration:none;}
   .ty-footer a.footer-email{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;}
@@ -90,7 +92,7 @@
         <div class="price-sub">15 pages &middot; Delivered immediately</div>
         <button class="buy-btn" id="buyBtn">Get the Full Report &rarr;</button>
         <a href="https://dashboard.industry-lens.com/signup" class="trial-btn" target="_blank" rel="noopener">Start a free 30-day trial instead</a>
-        <p class="trial-hint">No credit card required &middot; Cancel anytime</p>
+        <a href="mailto:naveed@industry-lens.com?subject=30-minute call — MSP CI Report" class="call-btn">Or book a 30-minute call &rarr;</a>
       </div>
     </div>
   </div>

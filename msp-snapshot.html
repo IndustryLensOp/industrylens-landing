@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://lmgzpvpkztnmqipzrnmf.supabase.co/storage/v1/object/public/favicons/Industry%20Lens%20logo%20transparent.png">
 <title>MSP & Endpoint Management CI Snapshot — Q1 2026 | IndustryLens</title>
 <meta name="description" content="SuperOps named rivals in 43 conquest ads. Atera became a Gartner Visionary. Ivanti's security collapsed. 90 days of MSP market moves, in 4 pages.">
 <style>
@@ -207,8 +208,7 @@
     if(!leadId)return;
     try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
   }
-  // Expanded blocklist — consumer + generic providers
-  const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinater','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
+  const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinator','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
   async function handleSubmit(e){
     e.preventDefault();
