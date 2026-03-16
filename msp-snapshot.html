@@ -161,7 +161,7 @@
           <div class="form-fields">
             <input type="text" class="f-input" id="nameInput" placeholder="Your name" autocomplete="name">
             <input type="email" class="f-input" id="emailInput" placeholder="Work email address" autocomplete="email">
-            <div class="f-error" id="emailError">Please use your company email &mdash; not Gmail, Hotmail, or Outlook.</div>
+            <div class="f-error" id="emailError">Please use your company email.</div>
           </div>
           <button type="submit" class="f-btn" id="submitBtn">Send me the snapshot &rarr;</button>
           <p class="f-fine">No spam. One email with your report.</p>
@@ -207,7 +207,8 @@
     if(!leadId)return;
     try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
   }
-  const FREE=['gmail','hotmail','yahoo','outlook','icloud','gmx','protonmail','aol','mail','yandex','zoho','live','msn'];
+  // Expanded blocklist — consumer + generic providers
+  const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinater','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
   async function handleSubmit(e){
     e.preventDefault();
