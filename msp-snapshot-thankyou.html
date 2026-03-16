@@ -40,11 +40,11 @@
   .price-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.35);margin-bottom:8px;}
   .price-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .price-sub{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:24px;}
-  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;border:none;transition:opacity 0.15s;margin-bottom:12px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;border:none;transition:opacity 0.15s;margin-bottom:16px;cursor:pointer;font-family:'Inter',sans-serif;}
   .buy-btn:hover{opacity:0.88;}
-  .card-divider{height:1px;background:var(--border-dark);margin:16px 0;}
-  .call-label{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;margin-bottom:12px;}
-  .tidycal-wrap{border-radius:8px;overflow:hidden;}
+  .trial-btn{display:block;width:100%;text-align:center;padding:13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.8);text-decoration:none;transition:background 0.15s,border-color 0.15s;}
+  .trial-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);}
+  .trial-hint{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:8px;}
   .ty-footer{border-top:1px solid var(--border-dark);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
   .ty-footer a.footer-logo{font-size:15px;font-weight:700;color:var(--white);text-decoration:none;}
   .ty-footer a.footer-email{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;}
@@ -59,6 +59,7 @@
   </a>
   <a href="/msp-snapshot" class="nav-back">&larr; Back</a>
 </nav>
+
 <div class="ty-hero">
   <div class="ty-hero-inner">
     <div class="ty-check">&#10003;</div>
@@ -68,6 +69,7 @@
     <p class="dl-hint">PDF &middot; 4 pages &middot; Free</p>
   </div>
 </div>
+
 <section class="upsell-section">
   <div class="section-divider"></div>
   <div class="upsell-grid">
@@ -89,20 +91,18 @@
         <div class="price-val">&euro;100</div>
         <div class="price-sub">15 pages &middot; Delivered immediately</div>
         <button class="buy-btn" id="buyBtn">Get the Full Report &rarr;</button>
-        <div class="card-divider"></div>
-        <div class="call-label">Or book a 30-minute call first &mdash; free</div>
-        <div class="tidycal-wrap">
-          <div class="tidycal-embed" data-path="industrylens/30-minute-meeting"></div>
-          <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async><\/script>
-        </div>
+        <a href="https://dashboard.industry-lens.com/signup" class="trial-btn" id="trialBtn" target="_blank" rel="noopener">Start a free 30-day trial instead</a>
+        <p class="trial-hint">No credit card required &middot; Cancel anytime</p>
       </div>
     </div>
   </div>
 </section>
+
 <footer class="ty-footer">
   <a href="https://industry-lens.com" class="footer-logo">IndustryLens</a>
   <a href="mailto:naveed@industry-lens.com" class="footer-email">naveed@industry-lens.com</a>
 </footer>
+
 <script>
   const SUPABASE_URL='https://lmgzpvpkztnmqipzrnmf.supabase.co';
   const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
@@ -125,7 +125,7 @@
     updateLead({report_downloaded_at:new Date().toISOString()});
   });
 
-  // Stripe CTA — track then redirect
+  // Stripe — track then open in new tab
   document.getElementById('buyBtn').addEventListener('click', async function(){
     await updateLead({full_report_clicked_at:new Date().toISOString()});
     const sp=new URLSearchParams();
@@ -138,14 +138,7 @@
     if(med) sp.set('utm_medium',med);
     if(camp) sp.set('utm_campaign',camp);
     const qs=sp.toString();
-    window.location.href='https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01'+(qs?'?'+qs:'');
-  });
-
-  // TidyCal booking complete
-  window.addEventListener('message',function(e){
-    if(e.data&&e.data.type==='tidycal:booking_complete'){
-      updateLead({call_booked_at:new Date().toISOString()});
-    }
+    window.open('https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01'+(qs?'?'+qs:''), '_blank', 'noopener');
   });
 </script>
 </body>
