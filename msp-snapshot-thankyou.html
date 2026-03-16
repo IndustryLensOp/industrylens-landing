@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your MSP Snapshot Is Ready | IndustryLens</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root{--red:#FC2642;--blue:#0C51FF;--grad:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);--dark:#0A0F1E;--card-bg:#1A2235;--border-dark:rgba(255,255,255,0.08);--white:#FFFFFF;--muted:#6B7280;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased;}
+  nav{border-bottom:1px solid var(--border-dark);padding:0 48px;height:62px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{font-size:16px;font-weight:700;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:8px;}
+  .nav-logo img{height:26px;}
+  .nav-back{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;}
+  .ty-hero{text-align:center;padding:64px 24px 48px;position:relative;}
+  .ty-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
+  .ty-hero-inner{position:relative;z-index:1;max-width:560px;margin:0 auto;}
+  .ty-check{width:64px;height:64px;border-radius:50%;background:rgba(27,158,75,0.12);border:1.5px solid #1B9E4B;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 24px;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;}
+  @keyframes popIn{from{opacity:0;transform:scale(0.6)}to{opacity:1;transform:scale(1)}}
+  .ty-hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.1;margin-bottom:14px;}
+  .ty-hero h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .ty-hero p{font-size:16px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:32px;}
+  .dl-btn{display:inline-flex;align-items:center;gap:10px;background:var(--grad);color:var(--white);font-size:16px;font-weight:700;padding:16px 32px;border-radius:10px;text-decoration:none;transition:opacity 0.15s;}
+  .dl-btn:hover{opacity:0.9;}
+  .dl-hint{font-size:12px;color:rgba(255,255,255,0.25);margin-top:10px;}
+  .upsell-section{max-width:820px;margin:0 auto;padding:0 24px 64px;}
+  .section-divider{height:1px;background:var(--border-dark);margin:48px 0;}
+  .upsell-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+  .upsell-left h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-0.8px;line-height:1.2;margin-bottom:12px;}
+  .upsell-left h2 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .upsell-left p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:20px;}
+  .upsell-features{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .upsell-features li{font-size:14px;color:rgba(255,255,255,0.65);display:flex;align-items:flex-start;gap:10px;line-height:1.45;}
+  .upsell-features li::before{content:"\2192";color:var(--red);font-weight:700;flex-shrink:0;}
+  .upsell-card{background:var(--card-bg);border:1px solid var(--border-dark);border-radius:16px;padding:32px;position:relative;overflow:hidden;}
+  .upsell-card::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;background:radial-gradient(ellipse,rgba(252,38,66,0.18) 0%,transparent 70%);pointer-events:none;}
+  .upsell-card::after{content:'';position:absolute;bottom:-50px;left:-50px;width:160px;height:160px;background:radial-gradient(ellipse,rgba(12,81,255,0.18) 0%,transparent 70%);pointer-events:none;}
+  .upsell-card-inner{position:relative;z-index:1;}
+  .price-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.35);margin-bottom:8px;}
+  .price-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .price-sub{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:24px;}
+  .buy-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--grad);border-radius:8px;font-size:15px;font-weight:700;color:var(--white);text-decoration:none;transition:opacity 0.15s;margin-bottom:12px;cursor:pointer;}
+  .buy-btn:hover{opacity:0.88;}
+  .card-divider{height:1px;background:var(--border-dark);margin:16px 0;}
+  .call-label{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;margin-bottom:12px;}
+  .tidycal-wrap{border-radius:8px;overflow:hidden;}
+  .ty-footer{border-top:1px solid var(--border-dark);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .ty-footer a.footer-logo{font-size:15px;font-weight:700;color:var(--white);text-decoration:none;}
+  .ty-footer a.footer-email{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;}
+  @media(max-width:680px){nav{padding:0 20px;}.upsell-grid{grid-template-columns:1fr;}.ty-footer{padding:20px;flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://industry-lens.com" class="nav-logo">
+    <img src="https://lmgzpvpkztnmqipzrnmf.supabase.co/storage/v1/object/public/favicons/Industry%20Lens%20logo%20transparent.png" alt="" onerror="this.style.display='none'">
+    IndustryLens
+  </a>
+  <a href="/msp-snapshot" class="nav-back">&larr; Back</a>
+</nav>
+<div class="ty-hero">
+  <div class="ty-hero-inner">
+    <div class="ty-check">&#10003;</div>
+    <h1>Your snapshot is <em>ready.</em></h1>
+    <p>Check your inbox &mdash; the report should arrive in a few minutes. Download directly below as a backup.</p>
+    <a href="/reports/IL_Teaser_ITManagement_Q1_2026.pdf" class="dl-btn" id="dlBtn" download>&#11015; Download the 4-page snapshot</a>
+    <p class="dl-hint">PDF &middot; 4 pages &middot; Free</p>
+  </div>
+</div>
+<section class="upsell-section">
+  <div class="section-divider"></div>
+  <div class="upsell-grid">
+    <div class="upsell-left">
+      <h2>Want the <em>full picture?</em></h2>
+      <p>The teaser covers 3 findings. The full 15-page report covers everything we tracked this quarter &mdash; every ad creative, every pricing move, every product launch, with ready-to-use battlecards.</p>
+      <ul class="upsell-features">
+        <li>Full ad campaign breakdown with creative analysis for all three competitors</li>
+        <li>Complete pricing change timeline &mdash; what changed, when, and what it means</li>
+        <li>Product launch log &mdash; every feature update across Atera, Ivanti, and SuperOps in Q1 2026</li>
+        <li>Ready-to-use battlecards for each competitor</li>
+        <li>Ivanti breach timeline for enterprise and public sector sales conversations</li>
+        <li>Cross-competitor pattern analysis &mdash; what the three moves together signal for Q2</li>
+      </ul>
+    </div>
+    <div class="upsell-card">
+      <div class="upsell-card-inner">
+        <div class="price-label">Full report &mdash; one-time</div>
+        <div class="price-val">&euro;100</div>
+        <div class="price-sub">15 pages &middot; Delivered immediately</div>
+        <a href="#" class="buy-btn" id="buyBtn">Get the Full Report &rarr;</a>
+        <div class="card-divider"></div>
+        <div class="call-label">Or book a 20-minute call first &mdash; free</div>
+        <div class="tidycal-wrap">
+          <div class="tidycal-embed" data-path="industrylens/30-minute-meeting"></div>
+          <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async><\/script>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="ty-footer">
+  <a href="https://industry-lens.com" class="footer-logo">IndustryLens</a>
+  <a href="mailto:naveed@industry-lens.com" class="footer-email">naveed@industry-lens.com</a>
+</footer>
+<script>
+  const SUPABASE_URL='https://lmgzpvpkztnmqipzrnmf.supabase.co';
+  const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
+  const params=new URLSearchParams(window.location.search);
+  let leadId=params.get('lid')||sessionStorage.getItem('il_lead_id');
+  async function updateLead(fields){
+    if(!leadId)return;
+    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
+  }
+  document.getElementById('dlBtn').addEventListener('click',()=>updateLead({report_downloaded_at:new Date().toISOString()}));
+  document.getElementById('buyBtn').addEventListener('click',function(e){
+    e.preventDefault();
+    updateLead({full_report_clicked_at:new Date().toISOString()}).then(()=>{
+      const sp=new URLSearchParams();
+      const ref=params.get('ref')||'';
+      const src=params.get('utm_source')||'';
+      const med=params.get('utm_medium')||'';
+      if(ref)sp.set('client_reference_id',ref);
+      if(src)sp.set('utm_source',src);
+      if(med)sp.set('utm_medium',med);
+      setTimeout(()=>{window.location.href='https://buy.stripe.com/dRm00kesz56W4Wy2yA1ZS01?'+sp.toString();},150);
+    });
+  });
+  window.addEventListener('message',function(e){if(e.data&&e.data.type==='tidycal:booking_complete')updateLead({call_booked_at:new Date().toISOString()});});
+</script>
+</body>
+</html>

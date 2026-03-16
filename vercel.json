@@ -1,6 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/msp-snapshot", "destination": "/msp-snapshot/index.html" },
-    { "source": "/msp-snapshot/thankyou", "destination": "/msp-snapshot/thankyou.html" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
