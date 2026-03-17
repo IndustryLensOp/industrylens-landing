@@ -125,7 +125,7 @@
   <div class="insights-inner">
     <div class="section-eyebrow">3 moves that changed the MSP market this quarter</div>
     <div class="insight-list">
-      <div class="insight-row"><div class="row-num">1</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">SuperOps</span><span class="badge badge-cat">Ad Campaigns</span><span class="badge badge-high">High Impact</span></div><p>SuperOps ran at 4&ndash;6x its normal ad volume for 6 straight weeks &mdash; explicitly naming SyncroMSP, Halo, and Splashtop in creatives. Australia is now 19% of their entire ad portfolio<span class="trail"> &rarr;</span></p></div></div>
+      <div class="insight-row"><div class="row-num">1</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">SuperOps</span><span class="badge badge-cat">Ad Campaigns</span><span class="badge badge-high">High Impact</span></div><p>SuperOps built a portfolio of 43 active search ads at 6x its rolling average &mdash; explicitly naming SyncroMSP, Halo, Continuum and Pulseway in creatives. Australia has since emerged as their second-largest market at 19% of their ad portfolio<span class="trail"> &rarr;</span></p></div></div>
       <div class="insight-row"><div class="row-num">2</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">Ivanti</span><span class="badge badge-cat">Security</span><span class="badge badge-high">High Impact</span></div><p>CISA shortened the federal patch deadline specifically for Ivanti. A Bloomberg investigation confirmed a state-sponsored backdoor affecting 119 organisations &mdash; with 4,000+ servers still exposed<span class="trail"> &rarr;</span></p></div></div>
       <div class="insight-row"><div class="row-num">3</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">Atera</span><span class="badge badge-cat">Brand &amp; Positioning</span><span class="badge badge-high">High Impact</span></div><p>Atera earned a Gartner Magic Quadrant Visionary designation and overhauled their brand &mdash; retiring &ldquo;RMM/PSA tool&rdquo; for &ldquo;Autonomous IT Platform.&rdquo; They&apos;re no longer competing on price<span class="trail"> &rarr;</span></p></div></div>
     </div>
@@ -148,7 +148,7 @@
       <h2>90 days of MSP market moves.<br><em>4 pages. Free.</em></h2>
       <p>Company email only &mdash; we don&apos;t send it to personal addresses.</p>
       <div class="gate-includes"><h4>What&apos;s inside</h4><ul>
-        <li>SuperOps&apos; 6-week conquest surge &mdash; 43 ads naming MSP rivals by name, across DACH, UK, and Australia</li>
+        <li>SuperOps&apos; conquest campaign &mdash; 43 ads naming MSP rivals by name, across UK, DACH, and Australia</li>
         <li>Atera&apos;s upmarket pivot &mdash; from budget RMM to Gartner Visionary in one quarter</li>
         <li>Ivanti&apos;s security collapse &mdash; what the CISA deadline and Bloomberg backdoor mean for your sales conversations</li>
         <li>SuperOps pricing changes &mdash; EUR rollout, per-endpoint tiers, and what they&apos;re targeting next</li>
@@ -176,7 +176,7 @@
     <div class="light-eyebrow">Report contents</div>
     <h2>4 pages. Every number sourced. No filler.</h2>
     <div class="contents-grid">
-      <div class="content-card"><span class="c-icon">&#128226;</span><h4>The coordinated ad surge</h4><p>Why SuperOps running 43 active search ads in three markets simultaneously signals a deliberate land-grab &mdash; not a routine campaign.</p></div>
+      <div class="content-card"><span class="c-icon">&#128226;</span><h4>The sustained ad campaign</h4><p>SuperOps running 43 active search ads at 6x its baseline across UK, DACH, and Australia &mdash; naming rivals directly in the creatives.</p></div>
       <div class="content-card"><span class="c-icon">&#128272;</span><h4>Ivanti&apos;s security crisis</h4><p>The full breach picture &mdash; CISA&apos;s shortened deadline, the Bloomberg backdoor story, and what it means for procurement conversations.</p></div>
       <div class="content-card"><span class="c-icon">&#127942;</span><h4>Atera goes upmarket</h4><p>What the Gartner Visionary designation means in practice &mdash; and how their brand overhaul changes how you position against them.</p></div>
       <div class="content-card"><span class="c-icon">&#128182;</span><h4>Pricing shifts</h4><p>SuperOps switched to EUR for European traffic and introduced per-endpoint tiers. Who it targets and what it means for pricing conversations.</p></div>
@@ -206,7 +206,7 @@
   async function updateLead(fields){
     if(!leadId)leadId=sessionStorage.getItem('il_lead_id');
     if(!leadId)return;
-    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
+    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields));}catch(e){console.warn(e);}
   }
   const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinator','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
