@@ -193,6 +193,7 @@
 <script>
   const SUPABASE_URL='https://lmgzpvpkztnmqipzrnmf.supabase.co';
   const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
+  const N8N_WEBHOOK='https://industrylens.app.n8n.cloud/webhook/campaign-lead-pdf-delivery';
   const params=new URLSearchParams(window.location.search);
   const UTM={source:params.get('utm_source')||'',medium:params.get('utm_medium')||'',campaign:params.get('utm_campaign')||'msp_q1_2026',content:params.get('utm_content')||'',ref:params.get('ref')||''};
   let leadId=null;
@@ -222,6 +223,8 @@
     if(isPersonal(email)){emailEl.classList.add('error');errEl.classList.add('show');return;}
     btn.textContent='Sending...';btn.classList.add('loading');
     await updateLead({name,email,form_submitted_at:new Date().toISOString()});
+    // Fire PDF delivery email — fire-and-forget, don't block redirect
+    if(leadId){fetch(N8N_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:leadId,email,name,campaign_slug:'msp-snapshot',utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign})}).catch(()=>{});}
     const tyParams=new URLSearchParams({lid:leadId||'',ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content});
     window.location.href=`/msp-snapshot-thankyou?${tyParams.toString()}`;
   }
