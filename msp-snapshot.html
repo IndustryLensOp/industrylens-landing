@@ -8,100 +8,137 @@
 <meta name="description" content="SuperOps named rivals in 43 conquest ads. Atera became a Gartner Visionary. Ivanti's security collapsed. 90 days of MSP market moves, in 4 pages.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-  :root{--red:#FC2642;--blue:#0C51FF;--grad:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);--dark:#0A0F1E;--card-bg:#1A2235;--border-dark:rgba(255,255,255,0.08);--border-light:#E5E7EB;--white:#FFFFFF;--off-white:#F9FBFD;--body-dark:rgba(255,255,255,0.7);--body-light:#374151;--muted:#6B7280;}
+  :root{
+    --red:#FC2642;--blue:#0C51FF;
+    --grad:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);
+    --dark:#0A0F1E;--card-bg:#141C2E;
+    --border-dark:rgba(255,255,255,0.07);
+    --border-light:#E5E7EB;
+    --white:#FFFFFF;--off-white:#F7F8FA;
+    --body-dark:rgba(255,255,255,0.65);
+    --body-light:#4B5563;--muted:#9CA3AF;
+  }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{font-family:'Inter',-apple-system,sans-serif;background:var(--white);color:var(--dark);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6;}
-  nav{position:sticky;top:0;z-index:200;background:rgba(10,15,30,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-dark);padding:0 48px;height:62px;display:flex;align-items:center;justify-content:space-between;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(10,15,30,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-dark);padding:0 52px;height:60px;display:flex;align-items:center;justify-content:space-between;}
   .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-  .nav-logo img{height:28px;width:auto;}
-  .nav-logo-text{font-size:16px;font-weight:700;color:var(--white);letter-spacing:-0.2px;}
-  .nav-cta{padding:9px 20px;background:var(--grad);border-radius:8px;font-size:14px;font-weight:600;color:var(--white);text-decoration:none;transition:opacity 0.15s;}
-  .nav-cta:hover{opacity:0.88;}
-  .hero{background:var(--dark);position:relative;overflow:hidden;padding:88px 48px 80px;text-align:center;}
-  .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
-  .hero::after{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse at center,rgba(252,38,66,0.18) 0%,rgba(12,81,255,0.12) 45%,transparent 70%);pointer-events:none;}
-  .hero-inner{position:relative;z-index:2;max-width:820px;margin:0 auto;}
-  .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(252,38,66,0.12);border:1px solid rgba(252,38,66,0.3);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:#FF6B80;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:32px;}
-  .pill-dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 8px rgba(252,38,66,0.8);animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(252,38,66,0.8);}50%{opacity:0.5;box-shadow:0 0 4px rgba(252,38,66,0.3);}}
-  .hero h1{font-size:clamp(36px,6vw,60px);font-weight:800;line-height:1.08;letter-spacing:-2px;color:var(--white);margin-bottom:22px;}
+  .nav-logo img{height:26px;width:auto;}
+  .nav-logo-text{font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.2px;}
+  .nav-cta{padding:8px 18px;background:var(--grad);border-radius:6px;font-size:13px;font-weight:600;color:var(--white);text-decoration:none;transition:opacity 0.15s;}
+  .nav-cta:hover{opacity:0.85;}
+
+  /* HERO */
+  .hero{background:var(--dark);position:relative;overflow:hidden;padding:100px 52px 88px;text-align:center;}
+  .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;}
+  .hero::after{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:440px;background:radial-gradient(ellipse at center,rgba(252,38,66,0.14) 0%,rgba(12,81,255,0.09) 50%,transparent 70%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:2;max-width:760px;margin:0 auto;}
+  .hero-label{display:inline-block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:28px;}
+  .hero h1{font-size:clamp(38px,5.5vw,64px);font-weight:800;line-height:1.06;letter-spacing:-2.5px;color:var(--white);margin-bottom:24px;}
   .hero h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .hero-sub{font-size:18px;color:var(--body-dark);font-weight:400;line-height:1.65;max-width:580px;margin:0 auto 40px;}
-  .hero-chips{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
-  .hero-chip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:7px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.85);}
-  .chip-dot{width:7px;height:7px;border-radius:50%;background:#1B9E4B;box-shadow:0 0 6px rgba(27,158,75,0.7);}
-  .chip-sep{color:rgba(255,255,255,0.2);font-size:18px;font-weight:200;}
-  .hero-cta-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:52px;flex-wrap:wrap;}
-  .hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:var(--white);font-size:15px;font-weight:700;padding:13px 28px;border-radius:8px;text-decoration:none;transition:opacity 0.15s;letter-spacing:-0.2px;}
-  .hero-cta-primary:hover{opacity:0.88;}
-  .hero-cta-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;padding:12px 22px;border-radius:8px;text-decoration:none;transition:background 0.15s,border-color 0.15s;}
-  .hero-cta-secondary:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);}
-  .insights-wrapper{background:var(--dark);padding:0 48px 72px;border-bottom:1px solid var(--border-dark);}
-  .insights-inner{max-width:820px;margin:0 auto;}
-  .section-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.35);text-align:center;margin-bottom:20px;}
-  .insight-list{display:flex;flex-direction:column;gap:10px;}
-  .insight-row{display:flex;align-items:flex-start;gap:16px;background:var(--card-bg);border:1px solid var(--border-dark);border-radius:12px;padding:20px 24px;transition:border-color 0.2s,transform 0.2s;}
-  .insight-row:hover{border-color:rgba(252,38,66,0.25);transform:translateY(-1px);}
-  .row-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--white);margin-top:1px;}
+  .hero-sub{font-size:17px;color:var(--body-dark);font-weight:400;line-height:1.7;max-width:520px;margin:0 auto 44px;}
+  .hero-chips{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:48px;}
+  .hero-chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);}
+  .chip-dot{width:6px;height:6px;border-radius:50%;background:#1B9E4B;box-shadow:0 0 5px rgba(27,158,75,0.6);}
+  .chip-sep{color:rgba(255,255,255,0.15);font-size:16px;}
+  .hero-cta{margin-top:8px;margin-bottom:0;}
+  .hero-cta a{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:var(--white);font-size:15px;font-weight:700;padding:14px 32px;border-radius:8px;text-decoration:none;transition:opacity 0.15s;letter-spacing:-0.2px;}
+  .hero-cta a:hover{opacity:0.88;}
+
+  /* INSIGHTS */
+  .insights-wrapper{background:var(--dark);padding:0 52px 80px;border-bottom:1px solid var(--border-dark);}
+  .insights-inner{max-width:760px;margin:0 auto;}
+  .section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.25);text-align:center;margin-bottom:24px;}
+  .insight-list{display:flex;flex-direction:column;gap:2px;}
+  .insight-row{display:flex;align-items:flex-start;gap:18px;background:var(--card-bg);border:1px solid var(--border-dark);border-radius:10px;padding:22px 24px;transition:border-color 0.2s;margin-bottom:8px;}
+  .insight-row:hover{border-color:rgba(252,38,66,0.2);}
+  .row-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);margin-top:2px;}
   .row-body{flex:1;}
-  .row-meta{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
-  .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;}
-  .badge-high{background:rgba(252,38,66,0.18);color:#FF6B80;border:1px solid rgba(252,38,66,0.3);}
-  .badge-comp{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.1);}
-  .badge-cat{color:rgba(255,255,255,0.35);font-size:11px;font-weight:400;}
-  .row-body p{font-size:15px;color:rgba(255,255,255,0.88);font-weight:500;line-height:1.5;}
-  .trail{color:var(--red);font-weight:700;}
-  .stat-strip{background:var(--off-white);border-bottom:1px solid var(--border-light);padding:30px 48px;}
-  .stat-strip-inner{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .row-meta{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+  .badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;}
+  .badge-comp{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.08);}
+  .badge-cat{color:rgba(255,255,255,0.3);font-size:10px;font-weight:500;}
+  .badge-high{background:rgba(252,38,66,0.12);color:#FF6B80;border:1px solid rgba(252,38,66,0.2);}
+  .row-body p{font-size:14.5px;color:rgba(255,255,255,0.82);font-weight:400;line-height:1.6;}
+  .trail{color:var(--red);font-weight:600;}
+
+  /* STAT STRIP */
+  .stat-strip{background:var(--off-white);border-bottom:1px solid var(--border-light);padding:32px 52px;}
+  .stat-strip-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
   .stat-block{text-align:center;flex:1;min-width:80px;}
-  .stat-val{display:block;font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--dark);line-height:1;margin-bottom:4px;}
+  .stat-val{display:block;font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:4px;}
   .stat-val span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .stat-lbl{font-size:12px;color:var(--muted);font-weight:400;}
-  .stat-sep{width:1px;height:36px;background:var(--border-light);flex-shrink:0;}
-  .gate-wrapper{padding:80px 48px;background:var(--white);}
-  .gate-inner{max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
-  .gate-left h2{font-size:clamp(26px,3.5vw,36px);font-weight:800;letter-spacing:-1px;line-height:1.15;color:var(--dark);margin-bottom:14px;}
+  .stat-lbl{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.2px;}
+  .stat-sep{width:1px;height:32px;background:var(--border-light);flex-shrink:0;}
+
+  /* GATE — full redesign */
+  .gate-wrapper{padding:96px 52px;background:var(--white);}
+  .gate-inner{max-width:880px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:72px;align-items:start;}
+  .gate-left h2{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-1px;line-height:1.2;color:var(--dark);margin-bottom:16px;}
   .gate-left h2 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .gate-left p{font-size:15px;color:var(--body-light);line-height:1.65;margin-bottom:28px;}
-  .gate-includes h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:14px;}
-  .gate-includes ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-  .gate-includes ul li{font-size:14px;color:var(--body-light);display:flex;align-items:flex-start;gap:10px;line-height:1.45;}
-  .gate-includes ul li::before{content:"\2713";font-weight:700;font-size:12px;flex-shrink:0;margin-top:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .gate-card{background:var(--dark);border:1px solid var(--border-dark);border-radius:16px;padding:36px;position:relative;overflow:hidden;}
-  .gate-card::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(ellipse,rgba(252,38,66,0.2) 0%,transparent 70%);pointer-events:none;}
-  .gate-card::after{content:'';position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;background:radial-gradient(ellipse,rgba(12,81,255,0.2) 0%,transparent 70%);pointer-events:none;}
+  .gate-left .gate-desc{font-size:15px;color:var(--body-light);line-height:1.7;margin-bottom:32px;}
+  .gate-includes-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:16px;}
+  .gate-includes ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .gate-includes ul li{font-size:14px;color:#374151;display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+  .gate-includes ul li .li-icon{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-top:1px;}
+  .gate-includes ul li .li-icon svg{width:9px;height:9px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* Form card — white on dark */
+  .gate-card{background:var(--dark);border-radius:16px;padding:40px 36px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.18);}
+  .gate-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(ellipse,rgba(252,38,66,0.15) 0%,transparent 70%);pointer-events:none;}
+  .gate-card::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(ellipse,rgba(12,81,255,0.15) 0%,transparent 70%);pointer-events:none;}
   .form-z{position:relative;z-index:2;}
-  .form-headline{font-size:20px;font-weight:700;color:var(--white);letter-spacing:-0.4px;margin-bottom:6px;}
-  .form-sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:24px;}
-  .form-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
-  .f-input{width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color 0.15s;}
-  .f-input::placeholder{color:rgba(255,255,255,0.28);}
-  .f-input:focus{border-color:rgba(252,38,66,0.45);}
-  .f-error{font-size:12px;color:#FF6B80;display:none;margin-top:-4px;}
+  .form-headline{font-size:19px;font-weight:700;color:var(--white);letter-spacing:-0.3px;margin-bottom:5px;}
+  .form-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.5;}
+  .form-fields{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+  /* White inputs with dark text */
+  .f-input{width:100%;padding:13px 16px;background:#FFFFFF;border:1.5px solid #E5E7EB;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:#111827;outline:none;transition:border-color 0.15s;}
+  .f-input::placeholder{color:#9CA3AF;}
+  .f-input:focus{border-color:#FC2642;box-shadow:0 0 0 3px rgba(252,38,66,0.08);}
+  .f-input.error{border-color:#FC2642;}
+  .f-error{font-size:12px;color:#FF6B80;display:none;margin-top:-6px;}
   .f-error.show{display:block;}
-  .f-btn{width:100%;padding:14px;background:var(--grad);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--white);cursor:pointer;transition:opacity 0.15s;}
+  .f-btn{width:100%;padding:15px;background:var(--grad);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--white);cursor:pointer;transition:opacity 0.15s;margin-top:4px;}
   .f-btn:hover{opacity:0.9;}
   .f-btn.loading{opacity:0.5;pointer-events:none;}
-  .f-fine{font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;}
-  .contents-section{background:var(--off-white);border-top:1px solid var(--border-light);padding:72px 48px;}
-  .contents-inner{max-width:820px;margin:0 auto;}
-  .light-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--red);margin-bottom:8px;}
-  .contents-inner h2{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-0.8px;color:var(--dark);line-height:1.2;margin-bottom:36px;}
-  .contents-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .content-card{background:var(--white);border:1px solid var(--border-light);border-radius:12px;padding:24px;transition:border-color 0.15s,box-shadow 0.15s;}
-  .content-card:hover{border-color:#D1D5DB;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
-  .content-card .c-icon{font-size:22px;display:block;margin-bottom:12px;}
-  .content-card h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:8px;}
-  .content-card p{font-size:13px;color:var(--muted);line-height:1.6;}
-  .msp-footer{background:var(--dark);border-top:1px solid var(--border-dark);padding:40px 48px 28px;}
-  .msp-footer-inner{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--border-dark);margin-bottom:20px;}
-  .footer-logo{font-size:16px;font-weight:700;color:var(--white);text-decoration:none;}
-  .footer-contact a{font-size:14px;color:rgba(255,255,255,0.5);text-decoration:none;}
-  .footer-base{max-width:820px;margin:0 auto;font-size:12px;color:rgba(255,255,255,0.25);text-align:center;}
-  .on-scroll{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease;}
+  .f-fine{font-size:11px;color:rgba(255,255,255,0.2);text-align:center;margin-top:12px;}
+
+  /* CONTENTS */
+  .contents-section{background:var(--off-white);border-top:1px solid var(--border-light);padding:80px 52px;}
+  .contents-inner{max-width:760px;margin:0 auto;}
+  .contents-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:10px;}
+  .contents-inner h2{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-0.8px;color:var(--dark);line-height:1.25;margin-bottom:40px;}
+  .contents-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .content-card{background:var(--white);border:1px solid #E9EAEC;border-radius:10px;padding:24px 22px;transition:border-color 0.15s,box-shadow 0.15s;}
+  .content-card:hover{border-color:#D1D5DB;box-shadow:0 4px 20px rgba(0,0,0,0.05);}
+  .c-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
+  .content-card h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.35;}
+  .content-card p{font-size:13px;color:var(--body-light);line-height:1.6;}
+
+  /* FOOTER */
+  .msp-footer{background:var(--dark);border-top:1px solid var(--border-dark);padding:36px 52px 24px;}
+  .msp-footer-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--border-dark);margin-bottom:16px;}
+  .footer-logo{font-size:14px;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:-0.2px;}
+  .footer-contact a{font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;}
+  .footer-base{max-width:760px;margin:0 auto;font-size:11px;color:rgba(255,255,255,0.2);text-align:center;}
+
+  .on-scroll{opacity:0;transform:translateY(14px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .on-scroll.visible{opacity:1;transform:translateY(0);}
-  @media(max-width:700px){nav{padding:0 20px;}.hero{padding:72px 20px 60px;}.insights-wrapper{padding:0 20px 56px;}.stat-strip{padding:24px 20px;}.stat-sep{display:none;}.gate-wrapper{padding:56px 20px;}.gate-inner{grid-template-columns:1fr;gap:44px;}.contents-section{padding:56px 20px;}.contents-grid{grid-template-columns:1fr;}.msp-footer{padding:32px 20px 20px;}.msp-footer-inner{flex-direction:column;align-items:flex-start;gap:12px;}}
+
+  @media(max-width:720px){
+    nav{padding:0 20px;}
+    .hero{padding:72px 20px 64px;}
+    .insights-wrapper{padding:0 20px 60px;}
+    .stat-strip{padding:24px 20px;}.stat-sep{display:none;}
+    .gate-wrapper{padding:64px 20px;}
+    .gate-inner{grid-template-columns:1fr;gap:48px;}
+    .contents-section{padding:60px 20px;}
+    .contents-grid{grid-template-columns:1fr;}
+    .msp-footer{padding:28px 20px 18px;}
+    .msp-footer-inner{flex-direction:column;align-items:flex-start;gap:10px;}
+  }
 </style>
 </head>
 <body>
@@ -112,11 +149,12 @@
   </a>
   <a href="#gate" class="nav-cta">Get the snapshot &rarr;</a>
 </nav>
+
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-pill"><span class="pill-dot"></span>MSP &amp; Endpoint Management &middot; Q1 2026</div>
+    <div class="hero-label">MSP &amp; Endpoint Management &middot; Q1 2026</div>
     <h1>Your MSP competitors<br>didn&apos;t <em>wait.</em></h1>
-    <p class="hero-sub">SuperOps named rivals in 43 conquest ads. Atera became a Gartner Visionary. Ivanti&apos;s security collapsed. 90 days of moves &mdash; in 4 pages. Free.</p>
+    <p class="hero-sub">SuperOps named rivals in 43 conquest ads. Atera became a Gartner Visionary. Ivanti&apos;s security collapsed. 90 days of moves &mdash; in 4 pages.</p>
     <div class="hero-chips">
       <div class="hero-chip"><span class="chip-dot"></span>Atera</div>
       <span class="chip-sep">&middot;</span>
@@ -124,22 +162,53 @@
       <span class="chip-sep">&middot;</span>
       <div class="hero-chip"><span class="chip-dot"></span>SuperOps</div>
     </div>
-    <div class="hero-cta-row">
-      <a href="#gate" class="hero-cta-primary">Get the free snapshot &rarr;</a>
-      <a href="https://dashboard.industry-lens.com/signup" target="_blank" rel="noopener" class="hero-cta-secondary">Start free trial</a>
+    <div class="hero-cta">
+      <a href="#gate">Get the free snapshot &rarr;</a>
     </div>
   </div>
 </section>
+
 <div class="insights-wrapper">
   <div class="insights-inner">
-    <div class="section-eyebrow">3 moves that changed the MSP market this quarter</div>
+    <div class="section-label">What we tracked this quarter</div>
     <div class="insight-list">
-      <div class="insight-row"><div class="row-num">1</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">SuperOps</span><span class="badge badge-cat">Ad Campaigns</span><span class="badge badge-high">High Impact</span></div><p>SuperOps built a portfolio of 43 active search ads at 6x its rolling average &mdash; explicitly naming SyncroMSP, Halo, Continuum and Pulseway in creatives. Australia has since emerged as their second-largest market at 19% of their ad portfolio<span class="trail"> &rarr;</span></p></div></div>
-      <div class="insight-row"><div class="row-num">2</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">Ivanti</span><span class="badge badge-cat">Security</span><span class="badge badge-high">High Impact</span></div><p>CISA shortened the federal patch deadline specifically for Ivanti. A Bloomberg investigation confirmed a state-sponsored backdoor affecting 119 organisations &mdash; with 4,000+ servers still exposed<span class="trail"> &rarr;</span></p></div></div>
-      <div class="insight-row"><div class="row-num">3</div><div class="row-body"><div class="row-meta"><span class="badge badge-comp">Atera</span><span class="badge badge-cat">Brand &amp; Positioning</span><span class="badge badge-high">High Impact</span></div><p>Atera earned a Gartner Magic Quadrant Visionary designation and overhauled their brand &mdash; retiring &ldquo;RMM/PSA tool&rdquo; for &ldquo;Autonomous IT Platform.&rdquo; They&apos;re no longer competing on price<span class="trail"> &rarr;</span></p></div></div>
+      <div class="insight-row">
+        <div class="row-num">1</div>
+        <div class="row-body">
+          <div class="row-meta">
+            <span class="badge badge-comp">SuperOps</span>
+            <span class="badge badge-cat">Ad Campaigns</span>
+            <span class="badge badge-high">High Impact</span>
+          </div>
+          <p>43 active search ads at 6x their rolling average &mdash; naming SyncroMSP, Halo, Continuum and Pulseway by name in the creatives. Australia is now their second-largest market at 19% of their ad portfolio.<span class="trail"> &rarr;</span></p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="row-num">2</div>
+        <div class="row-body">
+          <div class="row-meta">
+            <span class="badge badge-comp">Ivanti</span>
+            <span class="badge badge-cat">Security</span>
+            <span class="badge badge-high">High Impact</span>
+          </div>
+          <p>CISA shortened the federal patch deadline specifically for Ivanti. Bloomberg confirmed a state-sponsored backdoor affecting 119 organisations &mdash; 4,000+ servers still exposed as of March.<span class="trail"> &rarr;</span></p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="row-num">3</div>
+        <div class="row-body">
+          <div class="row-meta">
+            <span class="badge badge-comp">Atera</span>
+            <span class="badge badge-cat">Brand &amp; Positioning</span>
+            <span class="badge badge-high">High Impact</span>
+          </div>
+          <p>Gartner Magic Quadrant Visionary designation followed by a full rebrand &mdash; &ldquo;RMM/PSA tool&rdquo; is gone, replaced with &ldquo;Autonomous IT Platform.&rdquo; They&apos;re no longer competing on price.<span class="trail"> &rarr;</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 <div class="stat-strip on-scroll">
   <div class="stat-strip-inner">
     <div class="stat-block"><span class="stat-val"><span>1,405+</span></span><span class="stat-lbl">Ads monitored</span></div>
@@ -151,47 +220,81 @@
     <div class="stat-block"><span class="stat-val"><span>4</span></span><span class="stat-lbl">Pages &middot; Free</span></div>
   </div>
 </div>
+
 <section class="gate-wrapper on-scroll" id="gate">
   <div class="gate-inner">
     <div class="gate-left">
-      <h2>90 days of MSP market moves.<br><em>4 pages. Free.</em></h2>
-      <p>Company email only &mdash; we don&apos;t send it to personal addresses.</p>
-      <div class="gate-includes"><h4>What&apos;s inside</h4><ul>
-        <li>SuperOps&apos; conquest campaign &mdash; 43 ads naming MSP rivals by name, across UK, DACH, and Australia</li>
-        <li>Atera&apos;s upmarket pivot &mdash; from budget RMM to Gartner Visionary in one quarter</li>
-        <li>Ivanti&apos;s security collapse &mdash; what the CISA deadline and Bloomberg backdoor mean for your sales conversations</li>
-        <li>SuperOps pricing changes &mdash; EUR rollout, per-endpoint tiers, and what they&apos;re targeting next</li>
-      </ul></div>
+      <h2>90 days of moves.<br><em>4 pages. Free.</em></h2>
+      <p class="gate-desc">Company email only &mdash; we don&apos;t send it to personal addresses. No newsletter, no follow-up sequence. One email with your report.</p>
+      <div class="gate-includes">
+        <div class="gate-includes-label">What&apos;s inside</div>
+        <ul>
+          <li>
+            <span class="li-icon"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></span>
+            SuperOps&apos; conquest campaign &mdash; 43 ads naming rivals across UK, DACH and Australia
+          </li>
+          <li>
+            <span class="li-icon"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></span>
+            Atera&apos;s upmarket shift &mdash; from budget RMM to Gartner Visionary in one quarter
+          </li>
+          <li>
+            <span class="li-icon"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></span>
+            Ivanti&apos;s security crisis &mdash; what the CISA deadline means for your sales conversations
+          </li>
+          <li>
+            <span class="li-icon"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></span>
+            SuperOps pricing &mdash; EUR rollout, per-endpoint tiers, and who they&apos;re targeting
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="gate-card">
       <div class="form-z">
-        <div class="form-headline">Send me the report</div>
-        <div class="form-sub">Company email only.</div>
+        <div class="form-headline">Get the snapshot</div>
+        <div class="form-sub">Work email only. Delivered immediately.</div>
         <form id="gateForm" onsubmit="handleSubmit(event)">
           <div class="form-fields">
             <input type="text" class="f-input" id="nameInput" placeholder="Your name" autocomplete="name">
             <input type="email" class="f-input" id="emailInput" placeholder="Work email address" autocomplete="email">
             <div class="f-error" id="emailError">Please use your company email.</div>
           </div>
-          <button type="submit" class="f-btn" id="submitBtn">Send me the snapshot &rarr;</button>
+          <button type="submit" class="f-btn" id="submitBtn">Send me the report &rarr;</button>
           <p class="f-fine">No spam. One email with your report.</p>
         </form>
       </div>
     </div>
   </div>
 </section>
+
 <section class="contents-section on-scroll">
   <div class="contents-inner">
-    <div class="light-eyebrow">Report contents</div>
-    <h2>4 pages. Every number sourced. No filler.</h2>
+    <div class="contents-eyebrow">Report contents</div>
+    <h2>4 pages. Every number sourced.</h2>
     <div class="contents-grid">
-      <div class="content-card"><span class="c-icon">&#128226;</span><h4>The sustained ad campaign</h4><p>SuperOps running 43 active search ads at 6x its baseline across UK, DACH, and Australia &mdash; naming rivals directly in the creatives.</p></div>
-      <div class="content-card"><span class="c-icon">&#128272;</span><h4>Ivanti&apos;s security crisis</h4><p>The full breach picture &mdash; CISA&apos;s shortened deadline, the Bloomberg backdoor story, and what it means for procurement conversations.</p></div>
-      <div class="content-card"><span class="c-icon">&#127942;</span><h4>Atera goes upmarket</h4><p>What the Gartner Visionary designation means in practice &mdash; and how their brand overhaul changes how you position against them.</p></div>
-      <div class="content-card"><span class="c-icon">&#128182;</span><h4>Pricing shifts</h4><p>SuperOps switched to EUR for European traffic and introduced per-endpoint tiers. Who it targets and what it means for pricing conversations.</p></div>
+      <div class="content-card">
+        <div class="c-label">Ad Campaigns</div>
+        <h4>SuperOps&apos; conquest push</h4>
+        <p>43 search ads at 6x their baseline, naming rivals directly. Three markets, sustained for weeks.</p>
+      </div>
+      <div class="content-card">
+        <div class="c-label">Security</div>
+        <h4>Ivanti&apos;s rough quarter</h4>
+        <p>CISA deadline, Bloomberg backdoor story, 4,000+ exposed servers. What it means for procurement.</p>
+      </div>
+      <div class="content-card">
+        <div class="c-label">Brand &amp; Positioning</div>
+        <h4>Atera goes upmarket</h4>
+        <p>Gartner Visionary status and a full rebrand. How to reposition against them now.</p>
+      </div>
+      <div class="content-card">
+        <div class="c-label">Pricing</div>
+        <h4>SuperOps&apos; pricing shift</h4>
+        <p>EUR for European traffic, per-endpoint tiers for internal IT. Who it&apos;s targeting and why.</p>
+      </div>
     </div>
   </div>
 </section>
+
 <footer class="msp-footer">
   <div class="msp-footer-inner">
     <a href="https://industry-lens.com" class="footer-logo">IndustryLens</a>
@@ -199,6 +302,7 @@
   </div>
   <div class="footer-base">&copy; 2026 IndustryLens &middot; industry-lens.com</div>
 </footer>
+
 <script>
   const SUPABASE_URL='https://lmgzpvpkztnmqipzrnmf.supabase.co';
   const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtZ3pwdnBrenRubXFpcHpybm1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5MDc0MTEsImV4cCI6MjAzNzQ4MzQxMX0.MusuYoYGIVKLWRSMNFKYM98tBPTHzq9pXPTYXCrqr8Y';
@@ -216,7 +320,7 @@
   async function updateLead(fields){
     if(!leadId)leadId=sessionStorage.getItem('il_lead_id');
     if(!leadId)return;
-    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
+    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields));}catch(e){console.warn(e);}
   }
   const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinator','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
@@ -236,7 +340,7 @@
     const tyParams=new URLSearchParams({lid:leadId||'',ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content});
     window.location.href=`/msp-snapshot-thankyou?${tyParams.toString()}`;
   }
-  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.07});
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.06});
   document.querySelectorAll('.on-scroll').forEach(el=>obs.observe(el));
   trackPageView();
 </script>
