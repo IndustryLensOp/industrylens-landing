@@ -28,10 +28,15 @@
   .hero h1{font-size:clamp(36px,6vw,60px);font-weight:800;line-height:1.08;letter-spacing:-2px;color:var(--white);margin-bottom:22px;}
   .hero h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .hero-sub{font-size:18px;color:var(--body-dark);font-weight:400;line-height:1.65;max-width:580px;margin:0 auto 40px;}
-  .hero-chips{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:52px;}
+  .hero-chips{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
   .hero-chip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:7px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.85);}
   .chip-dot{width:7px;height:7px;border-radius:50%;background:#1B9E4B;box-shadow:0 0 6px rgba(27,158,75,0.7);}
   .chip-sep{color:rgba(255,255,255,0.2);font-size:18px;font-weight:200;}
+  .hero-cta-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:52px;flex-wrap:wrap;}
+  .hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:var(--white);font-size:15px;font-weight:700;padding:13px 28px;border-radius:8px;text-decoration:none;transition:opacity 0.15s;letter-spacing:-0.2px;}
+  .hero-cta-primary:hover{opacity:0.88;}
+  .hero-cta-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;padding:12px 22px;border-radius:8px;text-decoration:none;transition:background 0.15s,border-color 0.15s;}
+  .hero-cta-secondary:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);}
   .insights-wrapper{background:var(--dark);padding:0 48px 72px;border-bottom:1px solid var(--border-dark);}
   .insights-inner{max-width:820px;margin:0 auto;}
   .section-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.35);text-align:center;margin-bottom:20px;}
@@ -118,6 +123,10 @@
       <div class="hero-chip"><span class="chip-dot"></span>Ivanti</div>
       <span class="chip-sep">&middot;</span>
       <div class="hero-chip"><span class="chip-dot"></span>SuperOps</div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#gate" class="hero-cta-primary">Get the free snapshot &rarr;</a>
+      <a href="https://dashboard.industry-lens.com/signup" target="_blank" rel="noopener" class="hero-cta-secondary">Start free trial</a>
     </div>
   </div>
 </section>
@@ -207,7 +216,7 @@
   async function updateLead(fields){
     if(!leadId)leadId=sessionStorage.getItem('il_lead_id');
     if(!leadId)return;
-    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields));}catch(e){console.warn(e);}
+    try{await fetch(`${SUPABASE_URL}/rest/v1/campaign_leads?id=eq.${leadId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`},body:JSON.stringify(fields)});}catch(e){console.warn(e);}
   }
   const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinator','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
@@ -223,7 +232,6 @@
     if(isPersonal(email)){emailEl.classList.add('error');errEl.classList.add('show');return;}
     btn.textContent='Sending...';btn.classList.add('loading');
     await updateLead({name,email,form_submitted_at:new Date().toISOString()});
-    // Fire PDF delivery email — fire-and-forget, don't block redirect
     if(leadId){fetch(N8N_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:leadId,email,name,campaign_slug:'msp-snapshot',utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign})}).catch(()=>{});}
     const tyParams=new URLSearchParams({lid:leadId||'',ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content});
     window.location.href=`/msp-snapshot-thankyou?${tyParams.toString()}`;
