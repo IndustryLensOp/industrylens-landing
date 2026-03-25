@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1.0">
+<title>IndustryLens — Competitive Intelligence for B2B Teams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --red:   #FC2642;
+  --blue:  #0C51FF;
+  --grad:  linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);
+  --ink:   #1D1E21;
+  --body:  #374151;
+  --muted: #6B7280;
+  --rule:  #E5E7EB;
+  --bg:    #F9FBFD;
+  --white: #FFFFFF;
+  --ease:  cubic-bezier(.4,0,.2,1);
+}
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  font-family:'DM Sans', sans-serif;
+  background:#111;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─── DECK SHELL ───────────────────────────────────────────── */
+.deck {
+  position:relative;
+  width:100vw; height:100vh;
+  background:var(--white);
+  overflow:hidden;
+}
+
+/* ─── SLIDES ───────────────────────────────────────────────── */
+.slide {
+  position:absolute; inset:0;
+  display:flex;
+  background:var(--white);
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  transform: translateX(40px);
+  will-change: opacity, transform;
+}
+.slide.active {
+  opacity:1;
+  pointer-events:all;
+  transform: translateX(0);
+}
+.slide.exit {
+  opacity:0;
+  transform: translateX(-40px);
+  pointer-events:none;
+}
+
+/* ─── SLIDE LOGO BADGE ─────────────────────────────────────── */
+.slide-logo {
+  position:absolute;
+  top:20px; left:40px;
+  display:flex; align-items:center; gap:9px;
+  z-index:10;
+}
+.logo-mark {
+  width:28px; height:28px;
+  border-radius:7px;
+  background:var(--grad);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff;
+  font-family:'Playfair Display',serif;
+  font-weight:900; font-size:14px;
+  letter-spacing:-.5px;
+  flex-shrink:0;
+}
+.logo-name {
+  font-size:13px; font-weight:600;
+  color:var(--ink); letter-spacing:-.2px;
+}
+.slide.s3 .logo-name { color:rgba(255,255,255,.85); }
+
+/* ─── SLIDE NUMBER ─────────────────────────────────────────── */
+.slide-num {
+  position:absolute;
+  top:24px; right:40px;
+  font-size:12px; font-weight:500;
+  color:var(--muted); letter-spacing:.5px;
+  z-index:10;
+}
+.slide.s3 .slide-num { color:rgba(255,255,255,.3); }
+
+/* ─── NAV ──────────────────────────────────────────────────── */
+.nav {
+  position:fixed;
+  bottom:26px; left:50%;
+  transform:translateX(-50%);
+  display:flex; align-items:center; gap:14px;
+  background:rgba(255,255,255,.93);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--rule);
+  border-radius:50px;
+  padding:9px 20px;
+  z-index:100;
+  box-shadow:0 4px 24px rgba(0,0,0,.1);
+}
+.nav-btn {
+  width:30px; height:30px;
+  border-radius:50%; border:none;
+  background:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink); font-size:13px;
+  transition:background .15s;
+}
+.nav-btn:hover { background:var(--rule); }
+.nav-btn:disabled { opacity:.3; cursor:default; }
+.nav-count {
+  font-size:12px; font-weight:500;
+  color:var(--muted); min-width:44px; text-align:center;
+}
+.dots {
+  display:flex; gap:5px; align-items:center;
+}
+.dot {
+  width:6px; height:6px;
+  border-radius:3px;
+  background:var(--rule);
+  cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.dot.on {
+  background:var(--red);
+  width:20px;
+}
+
+/* ─── KEYBOARD HINT ────────────────────────────────────────── */
+.kbd-hint {
+  position:fixed;
+  bottom:28px; right:36px;
+  font-size:11px; color:rgba(150,150,150,.7);
+  display:flex; align-items:center; gap:4px;
+  letter-spacing:.3px;
+}
+kbd {
+  background:rgba(200,200,200,.3);
+  border:1px solid rgba(200,200,200,.4);
+  border-radius:3px;
+  padding:1px 5px;
+  font-size:10px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 1 — HERO
+══════════════════════════════════════════════════════════════ */
+.s1 {
+  background:var(--white);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:88px 60px 60px;
+  overflow:hidden;
+}
+/* Soft radial glows */
+.s1-glow-r {
+  position:absolute;
+  top:-140px; right:-140px;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(252,38,66,.07) 0%,transparent 68%);
+  pointer-events:none;
+}
+.s1-glow-b {
+  position:absolute;
+  bottom:-160px; left:-140px;
+  width:520px; height:520px;
+  background:radial-gradient(circle,rgba(12,81,255,.06) 0%,transparent 68%);
+  pointer-events:none;
+}
+/* Thin ruled lines for texture */
+.s1-lines {
+  position:absolute; inset:0;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 47px,
+    rgba(229,231,235,.35) 47px,
+    rgba(229,231,235,.35) 48px
+  );
+  pointer-events:none;
+}
+
+.s1-eyebrow {
+  font-size:11px; font-weight:700;
+  letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:22px;
+  opacity:0; transform:translateY(12px);
+  animation:fadeUp .5s var(--ease) .15s forwards;
+}
+.s1-headline {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,5.5vw,72px);
+  font-weight:900; line-height:1.04;
+  color:var(--ink);
+  max-width:780px;
+  margin-bottom:26px;
+  opacity:0; transform:translateY(16px);
+  animation:fadeUp .55s var(--ease) .3s forwards;
+}
+.s1-headline em {
+  font-style:italic;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.s1-sub {
+  font-size:17px; line-height:1.65;
+  color:var(--muted);
+  max-width:500px;
+  margin-bottom:38px;
+  opacity:0; transform:translateY(14px);
+  animation:fadeUp .5s var(--ease) .45s forwards;
+}
+.s1-pills {
+  display:flex; gap:8px; flex-wrap:wrap;
+  justify-content:center;
+  opacity:0; transform:translateY(10px);
+  animation:fadeUp .5s var(--ease) .6s forwards;
+}
+.pill {
+  padding:7px 15px;
+  border-radius:40px;
+  border:1.5px solid var(--rule);
+  font-size:12.5px; font-weight:500;
+  color:var(--body);
+  background:var(--bg);
+  transition:border-color .2s, color .2s;
+}
+.pill:hover { border-color:var(--red); color:var(--red); }
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 2 — THE GAP
+══════════════════════════════════════════════════════════════ */
+.s2 {
+  background:var(--white);
+  flex-direction:column;
+  padding:88px 60px 60px;
+}
+.slide-label {
+  font-size:11px; font-weight:700;
+  letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--red); margin-bottom:8px;
+}
+.slide-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,2.8vw,38px);
+  font-weight:700; color:var(--ink);
+  line-height:1.12; margin-bottom:20px;
+}
+.two-col {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:start;
+}
+.col-head {
+  font-size:10.5px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted);
+  padding-bottom:14px;
+  border-bottom:1.5px solid var(--rule);
+  margin-bottom:14px;
+}
+/* Reality items */
+.reality-list {
+  display:flex; flex-direction:column; gap:10px;
+}
+.reality-item {
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:10px;
+  align-items:start;
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid var(--rule);
+  background:var(--bg);
+  
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s2.active .reality-item:nth-child(1) { opacity:1; transform:none; transition-delay:.1s; }
+.s2.active .reality-item:nth-child(2) { opacity:1; transform:none; transition-delay:.2s; }
+.s2.active .reality-item:nth-child(3) { opacity:1; transform:none; transition-delay:.3s; }
+.s2.active .reality-item:nth-child(4) { opacity:1; transform:none; transition-delay:.4s; }
+.item-num {
+  width:22px; height:22px;
+  border-radius:50%;
+  background:rgba(252,38,66,.08);
+  border:1px solid rgba(252,38,66,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700;
+  color:var(--red);
+  flex-shrink:0;
+  margin-top:1px;
+}
+.item-content strong {
+  display:block;
+  font-size:13.5px; font-weight:600;
+  color:var(--ink); margin-bottom:2px;
+}
+.item-content span {
+  font-size:12.5px; color:var(--muted); line-height:1.5;
+}
+/* Blind spots */
+.blind-list {
+  display:flex; flex-direction:column; gap:10px;
+}
+.blind-item {
+  padding:14px 16px;
+  border-radius:10px;
+  border-left:3px solid transparent;
+  background:var(--bg);
+  border:1px solid var(--rule);
+  border-left:3px solid rgba(12,81,255,.25);
+  
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s2.active .blind-item:nth-child(1) { opacity:1; transform:none; transition-delay:.15s; }
+.s2.active .blind-item:nth-child(2) { opacity:1; transform:none; transition-delay:.25s; }
+.s2.active .blind-item:nth-child(3) { opacity:1; transform:none; transition-delay:.35s; }
+.s2.active .blind-item:nth-child(4) { opacity:1; transform:none; transition-delay:.45s; }
+.blind-item strong {
+  display:block;
+  font-size:13.5px; font-weight:600;
+  color:var(--ink); margin-bottom:3px;
+}
+.blind-item span {
+  font-size:12.5px; color:var(--muted); line-height:1.5;
+}
+/* Callout bar */
+.callout-bar {
+  margin-top:20px;
+  padding:16px 22px;
+  background:var(--ink);
+  border-radius:12px;
+  display:flex; align-items:center; gap:16px;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .5s var(--ease) .5s, transform .5s var(--ease) .5s;
+}
+.s2.active .callout-bar { opacity:1; transform:none; }
+.callout-stat {
+  font-family:'Playfair Display',serif;
+  font-size:38px; font-weight:900;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1; flex-shrink:0;
+}
+.callout-text {
+  font-size:13.5px; line-height:1.55;
+  color:rgba(255,255,255,.75);
+}
+.callout-text strong { color:rgba(255,255,255,.95); }
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 3 — COST OF BLINDNESS
+══════════════════════════════════════════════════════════════ */
+.s3 {
+  background:var(--white);
+  flex-direction:column;
+  padding:88px 60px 60px;
+  overflow:hidden;
+}
+.s3-accent {
+  position:absolute;
+  top:-200px; right:-200px;
+  width:600px; height:600px;
+  background:radial-gradient(circle,rgba(252,38,66,.05) 0%,transparent 65%);
+  pointer-events:none;
+}
+.s3 .slide-label { color:var(--red); }
+.s3 .slide-title { color:var(--ink); }
+.s3 .slide-num   { color:var(--muted); }
+.s3 .logo-name   { color:var(--ink); }
+
+.scenario-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  align-items:start;
+  margin-top:8px;
+}
+.s3-4col {
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.s3-4col .scenario-card { padding:20px 18px; }
+.s3-4col .sc-trigger { font-size:14px; }
+.s3-4col .sc-outcome { font-size:12px; }
+.scenario-card {
+  background:var(--bg);
+  border:1px solid var(--rule);
+  border-radius:14px;
+  padding:26px 22px;
+  display:flex; flex-direction:column; gap:14px;
+  position:relative; overflow:hidden;
+  
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+}
+.s3.active .scenario-card:nth-child(1) { opacity:1; transform:none; transition-delay:.1s; }
+.s3.active .scenario-card:nth-child(2) { opacity:1; transform:none; transition-delay:.25s; }
+.s3.active .scenario-card:nth-child(3) { opacity:1; transform:none; transition-delay:.4s; }
+/* sc-outcome no longer needs flex:1 */
+.scenario-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0;
+  height:2px;
+  background:var(--grad);
+}
+.sc-num {
+  font-size:10px; font-weight:700;
+  letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--muted);
+}
+.sc-trigger {
+  font-size:15px; font-weight:600;
+  color:var(--ink);
+  line-height:1.45;
+}
+.sc-outcome {
+  font-size:13px; color:var(--muted);
+  line-height:1.65;
+}
+.sc-cost {
+  font-size:12.5px; font-weight:600;
+  color:var(--red);
+  padding-top:12px;
+  border-top:1px solid var(--rule);
+  display:flex; align-items:center; gap:6px;
+}
+.sc-cost::before {
+  content:'';
+  width:7px; height:7px; border-radius:50%;
+  background:var(--red); flex-shrink:0;
+  opacity:.7;
+}
+.s3-footer {
+  margin-top:20px;
+  padding:14px 20px;
+  background:var(--bg);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  text-align:center;
+  font-size:13px; color:var(--muted);
+  line-height:1.6;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .5s var(--ease) .55s, transform .5s var(--ease) .55s;
+}
+.s3.active .s3-footer { opacity:1; transform:none; }
+.s3-footer strong { color:var(--ink); }
+
+/* ─── SHARED ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp {
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* Animate label + title on slide enter */
+.slide-label, .slide-title {
+  opacity:0; transform:translateY(10px);
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.slide.active .slide-label { opacity:1; transform:none; transition-delay:.05s; }
+.slide.active .slide-title  { opacity:1; transform:none; transition-delay:.12s; }
+
+/* s1 elements — reset animation on re-entry by removing/re-adding class */
+.slide.active .s1-eyebrow,
+.slide.active .s1-headline,
+.slide.active .s1-sub,
+.slide.active .s1-pills {
+  animation-play-state:running;
+}
+
+/* ─── DECK & SLIDES ─────────────────────────────────────── */
+
+
+
+
+
+
+/* ─── LOGO ──────────────────────────────────────────────── */
+
+
+
+
+/* ─── SLIDE NUMBER ──────────────────────────────────────── */
+
+
+/* ─── SLIDE TITLE ───────────────────────────────────────── */
+
+.slide.active 
+
+/* ─── NAV ───────────────────────────────────────────────── */
+
+
+
+
+
+
+
+
+
+/* ─── KBD HINT ──────────────────────────────────────────── */
+
+
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 4a — AI BUYER JOURNEY (new)
+══════════════════════════════════════════════════════════ */
+.s4a {
+  background:var(--white);
+  flex-direction:column;
+  padding:80px 60px 48px;
+}
+.s4a .slide-title { font-size:23px; line-height:1.2; margin-bottom:22px; }
+
+.ai-layout {
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:24px;
+  width:100%;
+  margin-bottom:18px;
+}
+
+.ai-stat-col {
+  display:flex; flex-direction:column; gap:14px;
+}
+.ai-big-stat {
+  border-radius:14px;
+  background:var(--grad);
+  color:#fff;
+  padding:22px 20px;
+  display:flex; flex-direction:column; gap:6px;
+}
+.ai-big-stat .stat-num {
+  font-family:'Playfair Display',serif;
+  font-size:46px; font-weight:900;
+  line-height:1; letter-spacing:-2px;
+}
+.ai-big-stat .stat-label {
+  font-size:11.5px; font-weight:500;
+  opacity:.9; line-height:1.45;
+}
+.ai-small-stat {
+  border:1.5px solid var(--rule);
+  border-radius:14px;
+  background:var(--bg);
+  padding:16px 18px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.ai-small-stat .stat-num {
+  font-family:'Playfair Display',serif;
+  font-size:32px; font-weight:900;
+  line-height:1; letter-spacing:-1px;
+  background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.ai-small-stat .stat-label { font-size:11.5px; color:var(--muted); line-height:1.45; }
+
+.ai-steps-col {
+  display:flex; flex-direction:column; gap:10px;
+}
+.ai-step {
+  display:flex; align-items:flex-start; gap:14px;
+  border:1.5px solid var(--rule);
+  border-radius:12px;
+  padding:12px 16px;
+  background:var(--bg);
+  opacity:0; transform:translateX(16px);
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s4a.active .ai-step:nth-child(1) { opacity:1; transform:none; transition-delay:.10s; }
+.s4a.active .ai-step:nth-child(2) { opacity:1; transform:none; transition-delay:.20s; }
+.s4a.active .ai-step:nth-child(3) { opacity:1; transform:none; transition-delay:.30s; }
+.s4a.active .ai-step:nth-child(4) { opacity:1; transform:none; transition-delay:.40s; }
+.ai-step.highlight {
+  border-color:rgba(252,38,66,.35);
+  background:#fff5f5;
+}
+.ai-step-num {
+  width:24px; height:24px; border-radius:50%;
+  background:var(--grad);
+  color:#fff; font-size:11px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+.ai-step.highlight .ai-step-num { box-shadow:0 2px 8px rgba(252,38,66,.35); }
+.ai-step-body strong { display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.ai-step-body span { font-size:11.5px; color:var(--muted); line-height:1.45; }
+.ai-step.highlight .ai-step-body strong { color:var(--red); }
+
+.s4a-footer {
+  padding:12px 18px;
+  border-radius:10px;
+  background:linear-gradient(135deg,rgba(252,38,66,.06) 0%,rgba(12,81,255,.06) 100%);
+  border:1px solid rgba(252,38,66,.2);
+  font-size:12.5px; color:var(--body); line-height:1.5;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 4b — IL TRACKS THE INPUTS (new)
+══════════════════════════════════════════════════════════ */
+.s4b {
+  background:var(--white);
+  flex-direction:column;
+  padding:80px 60px 52px;
+}
+.s4b .slide-title { font-size:24px; line-height:1.2; margin-bottom:6px; }
+.s4b-sub {
+  font-size:14px; color:var(--muted); margin-bottom:24px;
+}
+
+.sources-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  flex:1;
+}
+.src-card {
+  border:1.5px solid var(--rule);
+  border-radius:14px;
+  padding:20px 20px 18px;
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:8px;
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+  opacity:0; transform:translateY(14px);
+}
+.s4b.active .src-card:nth-child(1) { opacity:1; transform:none; transition-delay:.08s; }
+.s4b.active .src-card:nth-child(2) { opacity:1; transform:none; transition-delay:.16s; }
+.s4b.active .src-card:nth-child(3) { opacity:1; transform:none; transition-delay:.24s; }
+.s4b.active .src-card:nth-child(4) { opacity:1; transform:none; transition-delay:.32s; }
+.s4b.active .src-card:nth-child(5) { opacity:1; transform:none; transition-delay:.40s; }
+.s4b.active .src-card:nth-child(6) { opacity:1; transform:none; transition-delay:.48s; }
+.src-card-head {
+  display:flex; align-items:center; gap:10px;
+}
+.src-icon {
+  width:30px; height:30px; border-radius:8px;
+  background:var(--grad);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; flex-shrink:0;
+}
+.src-name { font-size:13px; font-weight:600; color:var(--ink); }
+.src-desc { font-size:11.5px; color:var(--muted); line-height:1.45; }
+.src-tag {
+  display:inline-block;
+  font-size:10px; font-weight:600;
+  padding:2px 8px; border-radius:20px;
+  background:rgba(252,38,66,.1);
+  color:var(--red);
+  align-self:flex-start;
+}
+.src-tag.blue {
+  background:rgba(12,81,255,.1);
+  color:var(--blue);
+}
+
+.s4b-footer {
+  margin-top:18px;
+  padding:14px 20px;
+  border-radius:10px;
+  background:linear-gradient(135deg,rgba(252,38,66,.07) 0%,rgba(12,81,255,.07) 100%);
+  border:1px solid rgba(252,38,66,.15);
+  font-size:12.5px; color:var(--body); line-height:1.5;
+  display:flex; align-items:center; gap:12px;
+}
+.s4b-footer-pill {
+  font-size:11px; font-weight:700;
+  padding:4px 12px; border-radius:20px;
+  background:var(--grad); color:#fff;
+  white-space:nowrap; flex-shrink:0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 4 — WHY EXISTING SOLUTIONS FAIL
+══════════════════════════════════════════════════════════ */
+.s4 {
+  background:var(--white);
+  flex-direction:column;
+  padding:88px 60px 60px;
+}
+.s4-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  align-items:stretch;
+  flex:1;
+}
+.s4.active .pricing-card:nth-child(1) { opacity:1; transform:none; transition-delay:.08s; }
+.s4.active .pricing-card:nth-child(2) { opacity:1; transform:none; transition-delay:.18s; }
+.s4.active .pricing-card:nth-child(3) { opacity:1; transform:none; transition-delay:.28s; }
+.s4.active .pricing-card:nth-child(4) { opacity:1; transform:none; transition-delay:.38s; }
+.pc-features-x .pc-feature::before { content:'×'; color:var(--red); }
+.cta-red { color:var(--red) !important; border-color:rgba(252,38,66,.25) !important; }
+
+.fail-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  align-items:stretch;
+}
+
+.fail-card {
+  border:1.5px solid var(--rule);
+  border-radius:14px;
+  padding:14px 16px;
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:0;
+  position:relative; overflow:hidden;
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.s4.active .fail-card:nth-child(1) { opacity:1; transform:none; transition-delay:.08s; }
+.s4.active .fail-card:nth-child(2) { opacity:1; transform:none; transition-delay:.18s; }
+.s4.active .fail-card:nth-child(3) { opacity:1; transform:none; transition-delay:.28s; }
+.s4.active .fail-card:nth-child(4) { opacity:1; transform:none; transition-delay:.38s; }
+
+/* IndustryLens card — same internal style as others, only border + name colour differ */
+.fail-card.il {
+  border-color:rgba(252,38,66,.3);
+  background:var(--bg);
+}
+.fail-card.il::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--grad); border-radius:14px 14px 0 0;
+}
+.fail-card.il .fail-card-name {
+  background:var(--grad);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  border-bottom-color:rgba(252,38,66,.15);
+}
+.il-verdict {
+  font-size:11px; font-weight:700;
+  color:var(--white);
+  padding:6px 10px;
+  background:var(--grad);
+  border-radius:7px;
+  text-align:center;
+}
+
+/* ChatGPT card — subtle blue border only, everything else matches */
+.fail-card.chatgpt {
+  border-color:rgba(12,81,255,.25);
+  background:var(--bg);
+}
+
+.fail-card-name {
+  font-size:14px; font-weight:700; color:var(--ink);
+  padding-bottom:8px; margin-bottom:8px;
+  border-bottom:1.5px solid var(--rule);
+}
+
+.fail-list {
+  display:flex; flex-direction:column; gap:6px;
+  margin-bottom:10px;
+}
+.fail-list li {
+  list-style:none;
+  font-size:11.5px; color:var(--body);
+  padding-left:16px; position:relative;
+  line-height:1.4;
+}
+.fail-list li::before {
+  content:'×';
+  position:absolute; left:0;
+  color:var(--red); font-weight:700; font-size:13px;
+}
+
+.fail-verdict {
+  font-size:11px; font-weight:700;
+  color:var(--red);
+  padding:6px 10px;
+  background:rgba(252,38,66,.06);
+  border-radius:7px;
+  text-align:center;
+  letter-spacing:.2px;
+}
+
+/* Source logos row */
+.source-logos {
+  display:flex; flex-wrap:wrap; gap:7px;
+  margin-top:6px;
+}
+.src-logo {
+  height:24px; padding:0 9px;
+  border-radius:6px;
+  border:1px solid var(--rule);
+  background:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700;
+  color:var(--muted); letter-spacing:.3px;
+  white-space:nowrap;
+}
+
+/* Category signal pills */
+.signal-pills {
+  display:flex; flex-wrap:wrap; gap:6px;
+  margin-top:6px;
+}
+.sig-pill {
+  padding:5px 10px;
+  border-radius:20px;
+  background:var(--white);
+  border:1px solid var(--rule);
+  font-size:11px; font-weight:600;
+  color:var(--body);
+  display:flex; align-items:center; gap:5px;
+}
+.sig-pill .sig-count {
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:700;
+}
+.s5 {
+  background:var(--white);
+  flex-direction:column;
+  padding:88px 60px 60px;
+}
+
+.s5-sub {
+  font-size:15px; color:var(--muted); margin-top:-12px;
+  margin-bottom:32px; line-height:1.5;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .4s var(--ease) .18s, transform .4s var(--ease) .18s;
+}
+.slide.active .s5-sub { opacity:1; transform:none; }
+
+.feature-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  align-items:stretch;
+}
+
+.feature-card {
+  border:1.5px solid var(--rule);
+  border-radius:14px;
+  padding:18px 20px;
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:14px;
+  position:relative; overflow:hidden;
+  
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.s5.active .feature-card:nth-child(1) { opacity:1; transform:none; transition-delay:.12s; }
+.s5.active .feature-card:nth-child(2) { opacity:1; transform:none; transition-delay:.24s; }
+.s5.active .feature-card:nth-child(3) { opacity:1; transform:none; transition-delay:.36s; }
+
+/* Gradient top accent */
+.feature-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0;
+  height:3px; background:var(--grad);
+}
+
+.fc-title {
+  font-size:15px; font-weight:700;
+  color:var(--ink); line-height:1.2;
+  padding-bottom:10px;
+  border-bottom:1.5px solid var(--rule);
+  margin-bottom:2px;
+}
+.fc-desc {
+  font-size:13px; color:var(--muted);
+  line-height:1.65; flex:1;
+}
+.fc-tags {
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin-top:4px;
+}
+.fc-tag {
+  padding:5px 11px;
+  border-radius:30px;
+  border:1px solid var(--rule);
+  background:var(--white);
+  font-size:11.5px; font-weight:600;
+  color:var(--body);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 6 — WHO WINS (rebuilt inline, no overrides needed)
+══════════════════════════════════════════════════════════ */
+.sx6 { background:var(--white); }
+
+/* ─── SHARED CHROME ─────────────────────────────────────── */
+
+
+
+
+
+.slide.active 
+
+/* ─── NAV ───────────────────────────────────────────────── */
+
+
+
+
+
+
+
+
+
+
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 7 — HOW THE AI WORKS
+══════════════════════════════════════════════════════════ */
+.s7 {
+  background:var(--white);
+  flex-direction:column;
+  align-items:center;
+  padding:68px 60px 32px;
+}
+
+/* Pipeline track */
+.pipeline-wrap {
+  flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:32px;
+  width:900px;
+}
+.pipeline-track {
+  display:flex; align-items:center;
+  gap:0; position:relative;
+  width:800px;
+}
+/* Connecting line behind steps */
+.pipeline-track::before {
+  content:'';
+  position:absolute; top:28px; left:40px; right:40px; height:2px; width:calc(100% - 80px);
+  background:var(--rule); z-index:0;
+}
+.pipeline-track::after {
+  content:'';
+  position:absolute; top:28px; left:40px; width:0; height:2px;
+  background:var(--grad); z-index:1;
+  transition:width 1s var(--ease) .4s;
+}
+.s7.active .pipeline-track::after { width:calc(100% - 80px); }
+.s7 .pipeline-track::after { width:calc(100% - 80px); }
+
+.pipe-step {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; gap:14px; position:relative; z-index:2;
+  
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s7.active .pipe-step:nth-child(1) { opacity:1; transform:none; transition-delay:.1s; }
+.s7.active .pipe-step:nth-child(2) { opacity:1; transform:none; transition-delay:.25s; }
+.s7.active .pipe-step:nth-child(3) { opacity:1; transform:none; transition-delay:.4s; }
+.s7.active .pipe-step:nth-child(4) { opacity:1; transform:none; transition-delay:.55s; }
+
+.pipe-node {
+  width:56px; height:56px; border-radius:50%;
+  border:2px solid transparent;
+  background:var(--grad);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; position:relative;
+  box-shadow:0 4px 18px rgba(252,38,66,.2);
+  transition:border-color .3s, box-shadow .3s;
+}
+.pipe-node svg { width:22px; height:22px; stroke:white; }
+
+.pipe-label {
+  font-size:13px; font-weight:700; color:var(--ink);
+  text-align:center; line-height:1.3;
+}
+.pipe-desc {
+  font-size:12px; color:var(--muted);
+  text-align:center; line-height:1.55; max-width:160px;
+}
+
+/* Cards row below pipeline */
+.pipe-cards {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  align-items:stretch;
+  width:900px;
+}
+.pipe-card {
+  padding:18px 16px;
+  border-radius:12px;
+  border:1px solid var(--rule);
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:6px;
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s7.active .pipe-card:nth-child(1) { opacity:1; transform:none; transition-delay:.2s; }
+.s7.active .pipe-card:nth-child(2) { opacity:1; transform:none; transition-delay:.35s; }
+.s7.active .pipe-card:nth-child(3) { opacity:1; transform:none; transition-delay:.5s; }
+.s7.active .pipe-card:nth-child(4) { opacity:1; transform:none; transition-delay:.65s; }
+.pc-num {
+  font-size:10px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--muted); margin-bottom:8px;
+}
+.pc-title { font-size:13.5px; font-weight:700; color:var(--ink); margin-bottom:6px; }
+.pc-desc  { font-size:12px; color:var(--muted); line-height:1.6; }
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 9 — REAL CI EXAMPLES (rebuilt inline, no overrides needed)
+══════════════════════════════════════════════════════════ */
+.sx9 { background:var(--white); }
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 10 — DELIVERY + GETTING STARTED
+══════════════════════════════════════════════════════════ */
+.s10 {
+  background:var(--white);
+  flex-direction:row;
+}
+.s10-left {
+  flex:0 0 52%;
+  padding:88px 48px 60px 60px;
+  display:flex; flex-direction:column;
+  background:var(--white);
+}
+.s10-right {
+  flex:1;
+  padding:88px 48px 60px 40px;
+  display:flex; flex-direction:column;
+  justify-content:center;
+  border-left:1.5px solid var(--rule);
+  background:var(--bg);
+}
+
+/* Delivery channel cards */
+.delivery-list {
+  display:flex; flex-direction:column; gap:12px;
+  align-items:start;
+}
+.delivery-item {
+  padding:16px 18px;
+  border-radius:12px;
+  border:1.5px solid var(--rule);
+  background:var(--white);
+  width:100%;
+  
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.s10.active .delivery-item:nth-child(1) { opacity:1; transform:none; transition-delay:.1s; }
+.s10.active .delivery-item:nth-child(2) { opacity:1; transform:none; transition-delay:.2s; }
+.s10.active .delivery-item:nth-child(3) { opacity:1; transform:none; transition-delay:.3s; }
+.s10.active .delivery-item:nth-child(4) { opacity:1; transform:none; transition-delay:.4s; }
+.di-title {
+  font-size:13.5px; font-weight:700; color:var(--ink);
+  margin-bottom:3px;
+}
+.di-desc {
+  font-size:12.5px; color:var(--muted); line-height:1.55;
+}
+
+/* Timeline */
+.timeline-label {
+  font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--muted);
+  margin-bottom:24px;
+  opacity:0;
+  transition:opacity .4s var(--ease) .1s;
+}
+.s10.active .timeline-label { opacity:1; }
+
+.timeline {
+  display:flex; flex-direction:column; gap:0;
+  position:relative;
+}
+/* Vertical line */
+.timeline::before {
+  content:'';
+  position:absolute; left:7px; top:8px; bottom:8px;
+  width:1.5px; background:var(--rule);
+}
+.tl-item {
+  display:flex; align-items:flex-start; gap:20px;
+  padding-bottom:28px;
+  position:relative;
+  
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.tl-item:last-child { padding-bottom:0; }
+.s10.active .tl-item:nth-child(1) { opacity:1; transform:none; transition-delay:.15s; }
+.s10.active .tl-item:nth-child(2) { opacity:1; transform:none; transition-delay:.28s; }
+.s10.active .tl-item:nth-child(3) { opacity:1; transform:none; transition-delay:.41s; }
+.s10.active .tl-item:nth-child(4) { opacity:1; transform:none; transition-delay:.54s; }
+
+.tl-dot {
+  width:16px; height:16px; border-radius:50%;
+  border:2px solid var(--rule);
+  background:var(--white);
+  flex-shrink:0; margin-top:2px;
+  position:relative; z-index:1;
+  transition:border-color .3s, background .3s;
+}
+.s10.active .tl-dot {
+  border-color:var(--red);
+  background:var(--red);
+}
+.tl-day {
+  font-size:12px; font-weight:700; color:var(--red);
+  margin-bottom:3px; line-height:1;
+}
+.tl-text {
+  font-size:13.5px; color:var(--body); line-height:1.55;
+}
+.tl-badge {
+  display:inline-block; margin-top:5px;
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase;
+  padding:2px 8px; border-radius:10px;
+}
+.badge-email   { background:rgba(252,38,66,.08); color:var(--red); }
+.badge-dash    { background:rgba(12,81,255,.08); color:var(--blue); }
+.badge-report  { background:rgba(27,158,75,.08); color:#1B9E4B; }
+
+.tl-cta {
+  margin-top:28px; padding-top:24px;
+  border-top:1px solid var(--rule);
+  font-size:13px; color:var(--muted); line-height:1.6;
+  opacity:0;
+  transition:opacity .5s var(--ease) .6s;
+}
+.s10.active .tl-cta { opacity:1; }
+.tl-cta strong { color:var(--ink); }
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 11 — PRICING
+══════════════════════════════════════════════════════════ */
+.s11 {
+  background:var(--white);
+  flex-direction:column;
+  padding:88px 60px 60px;
+}
+.pricing-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  align-items:stretch;
+}
+.pricing-card {
+  border:1.5px solid var(--rule);
+  border-radius:14px;
+  padding:28px 24px;
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:16px;
+  position:relative; overflow:hidden;
+  
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.pc-cta {
+  display:block; width:100%;
+  padding:11px 16px;
+  border-radius:8px;
+  font-size:13px; font-weight:700;
+  text-align:center; cursor:pointer; border:none;
+  transition:opacity .2s;
+  margin-top:auto;
+}
+.pc-cta:hover { opacity:.85; }
+.s11.active .pricing-card:nth-child(1) { opacity:1; transform:none; transition-delay:.08s; }
+.s11.active .pricing-card:nth-child(2) { opacity:1; transform:none; transition-delay:.2s; }
+.s11.active .pricing-card:nth-child(3) { opacity:1; transform:none; transition-delay:.32s; }
+
+/* Scale card — highlighted */
+.pricing-card.scale {
+  border-color:rgba(252,38,66,.3);
+  background:var(--white);
+}
+.pricing-card.scale::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--grad);
+}
+.pricing-card.scale .pc-name {
+  background:var(--grad);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.pc-name {
+  font-size:15px; font-weight:700; color:var(--ink);
+  padding-bottom:14px;
+  border-bottom:1.5px solid var(--rule);
+}
+.pc-price {
+  display:flex; align-items:baseline; gap:4px;
+}
+.pc-price-num {
+  font-family:'Playfair Display',serif;
+  font-size:40px; font-weight:900; color:var(--ink); line-height:1;
+}
+.pricing-card.scale .pc-price-num {
+  background:var(--grad);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.pc-price-per { font-size:13px; color:var(--muted); }
+.pc-competitors {
+  font-size:12px; font-weight:600;
+  color:var(--muted);
+  padding:6px 10px;
+  background:var(--bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  display:inline-block;
+}
+.pricing-card.scale .pc-competitors {
+  background:rgba(252,38,66,.05);
+  border-color:rgba(252,38,66,.2);
+  color:var(--red);
+}
+.pc-features {
+  display:flex; flex-direction:column; gap:9px;
+  flex:1;
+}
+.pc-feature {
+  display:flex; align-items:flex-start; gap:8px;
+  font-size:12.5px; color:var(--body); line-height:1.45;
+}
+.pc-feature::before {
+  content:'✓';
+  color:var(--red); font-weight:700; font-size:12px;
+  flex-shrink:0; margin-top:1px;
+}
+.cta-outline {
+  background:transparent;
+  border:1.5px solid var(--rule);
+  color:var(--ink);
+}
+.cta-grad {
+  background:var(--grad);
+  color:white;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE 12 — FINAL CTA
+══════════════════════════════════════════════════════════ */
+.s12 {
+  background:var(--white);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:88px 60px 60px;
+  overflow:hidden;
+}
+/* Same soft glows as hero */
+.s12-glow-r {
+  position:absolute; top:-140px; right:-140px;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(252,38,66,.07) 0%,transparent 68%);
+  pointer-events:none;
+}
+.s12-glow-b {
+  position:absolute; bottom:-160px; left:-140px;
+  width:520px; height:520px;
+  background:radial-gradient(circle,rgba(12,81,255,.06) 0%,transparent 68%);
+  pointer-events:none;
+}
+.s12-lines {
+  position:absolute; inset:0;
+  background-image:repeating-linear-gradient(
+    0deg, transparent, transparent 47px,
+    rgba(229,231,235,.35) 47px, rgba(229,231,235,.35) 48px
+  );
+  pointer-events:none;
+}
+.s12-headline {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,4.5vw,58px);
+  font-weight:900; line-height:1.08;
+  color:var(--ink); max-width:680px;
+  margin-bottom:16px;
+  opacity:0; transform:translateY(16px);
+  animation:fadeUp .55s var(--ease) .15s forwards;
+}
+.s12-headline em {
+  font-style:italic;
+  background:var(--grad);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.s12-sub {
+  font-size:16px; color:var(--muted); margin-bottom:36px;
+  opacity:0; transform:translateY(10px);
+  animation:fadeUp .5s var(--ease) .3s forwards;
+}
+.s12-btn {
+  display:inline-block;
+  padding:15px 36px;
+  background:var(--grad);
+  color:white; border:none; border-radius:10px;
+  font-size:15px; font-weight:700; cursor:pointer;
+  box-shadow:0 4px 20px rgba(252,38,66,.25);
+  transition:transform .2s, box-shadow .2s;
+  margin-bottom:16px;
+  opacity:0; transform:translateY(10px);
+  animation:fadeUp .5s var(--ease) .42s forwards;
+}
+.s12-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(252,38,66,.3); }
+.s12-micro {
+  font-size:12px; color:var(--muted);
+  opacity:0; transform:translateY(8px);
+  animation:fadeUp .5s var(--ease) .54s forwards;
+  margin-bottom:48px;
+}
+.s12-url {
+  font-size:13px; font-weight:600; color:var(--muted);
+  letter-spacing:.3px;
+  opacity:0; transform:translateY(8px);
+  animation:fadeUp .5s var(--ease) .64s forwards;
+}
+
+@keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+/* Per-slide title overrides */
+.s4 .slide-title { font-size:22px; line-height:1.2; margin-bottom:16px; }
+.s7 .slide-title { font-size:26px; margin-bottom:12px; width:900px; text-align:left; }
+.pipe-node-active {
+  border-color:transparent !important;
+  background:var(--grad) !important;
+  box-shadow:0 4px 18px rgba(252,38,66,.2) !important;
+}
+.pipe-node-active svg { stroke:white !important; }
+
+/* Inline header row — eliminates logo/title overlap permanently */
+/* Deck-ready animation guards */
+.deck-ready .fail-card { opacity:0; transform:translateY(18px); }
+.deck-ready .feature-card { opacity:0; transform:translateY(18px); }
+.deck-ready .persona-card { opacity:0; transform:translateY(18px); }
+.deck-ready .pipe-card { opacity:1; transform:none; }
+.deck-ready .pipe-step { opacity:1; transform:none; }
+.deck-ready .intel-card { opacity:0; transform:translateY(16px); }
+.deck-ready .pricing-card { opacity:0; transform:translateY(18px); }
+.deck-ready .scenario-card { opacity:0; transform:translateY(20px); }
+.deck-ready .reality-item { opacity:0; transform:translateX(-12px); }
+.deck-ready .blind-item { opacity:0; transform:translateX(12px); }
+.deck-ready .delivery-item { opacity:0; transform:translateX(-14px); }
+.deck-ready .tl-item { opacity:0; transform:translateY(10px); }
+.deck-ready .data-point { opacity:0; transform:translateX(14px); }
+.deck-ready .ad-mockup { opacity:0; transform:translateX(-16px); }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ── SLIDE 1 ── HERO ──────────────────────────────────── -->
+  <div class="slide s1 active" data-index="0">
+    <div class="s1-lines"></div>
+    <div class="s1-glow-r"></div>
+    <div class="s1-glow-b"></div>
+
+    <div class="slide-logo">
+      <div class="logo-mark">IL</div>
+      <span class="logo-name">IndustryLens</span>
+    </div>
+    <div class="slide-num">1 / 13</div>
+
+    <h1 class="s1-headline">
+      Know What Competitors Are Doing —<br>
+      <em>Before It Costs You a Deal</em>
+    </h1>
+    <p class="s1-sub">
+      IndustryLens monitors 30+ sources across your competitive landscape
+      and delivers weekly intelligence your team can act on.
+    </p>
+    <div class="s1-pills">
+      <span class="pill">B2B SaaS</span>
+      <span class="pill">Marketing</span>
+      <span class="pill">Sales</span>
+      <span class="pill">Product</span>
+      <span class="pill">Management</span>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2 ── THE GAP ───────────────────────────────── -->
+  <div class="slide s2" data-index="1">
+    <div class="slide-logo">
+      <div class="logo-mark">IL</div>
+      <span class="logo-name">IndustryLens</span>
+    </div>
+    <div class="slide-num">2 / 13</div>
+
+    <h2 class="slide-title">The Gap in B2B Competitive Monitoring</h2>
+
+    <div class="two-col">
+      <!-- Left: The Reality -->
+      <div>
+        <div class="col-head">The Reality</div>
+        <div class="reality-list">
+          <div class="reality-item">
+            <div class="item-num">1</div>
+            <div class="item-content">
+              <strong>10–15 hours wasted monthly</strong>
+            </div>
+          </div>
+          <div class="reality-item">
+            <div class="item-num">2</div>
+            <div class="item-content">
+              <strong>Intel scattered across multiple sources</strong>
+            </div>
+          </div>
+          <div class="reality-item">
+            <div class="item-num">3</div>
+            <div class="item-content">
+              <strong>73% of teams miss critical signals</strong>
+            </div>
+          </div>
+          <div class="reality-item">
+            <div class="item-num">4</div>
+            <div class="item-content">
+              <strong>Reactive, not proactive</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: The Blind Spots -->
+      <div>
+        <div class="col-head">The Blind Spots</div>
+        <div class="blind-list">
+          <div class="blind-item">
+            <strong>Inconsistent tracking</strong>
+          </div>
+          <div class="blind-item">
+            <strong>Delayed detection</strong>
+          </div>
+          <div class="blind-item">
+            <strong>Cross-functional gaps</strong>
+          </div>
+          <div class="blind-item">
+            <strong>No change monitoring</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-bar">
+      <div class="callout-stat">2.7×</div>
+      <div class="callout-text">
+        Companies with <strong>proactive competitive intelligence</strong> are 2.7× more likely to exceed revenue targets.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3 ── COST OF BLINDNESS ─────────────────────── -->
+  <div class="slide s3" data-index="2">
+    <div class="s3-accent"></div>
+
+    <div class="slide-logo">
+      <div class="logo-mark">IL</div>
+      <span class="logo-name">IndustryLens</span>
+    </div>
+    <div class="slide-num">3 / 13</div>
+
+    <h2 class="slide-title">The Strategic Cost of Competitive Blindness</h2>
+
+    <div class="scenario-grid s3-4col">
+
+      <div class="scenario-card">
+        <div class="sc-num">01</div>
+        <div class="sc-trigger">Competitor shifts positioning</div>
+        <div class="sc-outcome">
+          You notice only when pipeline dips and deals start slipping to their new "market leader" claim.
+        </div>
+        <div class="sc-cost">By the time you react, the damage is done</div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="sc-num">02</div>
+        <div class="sc-trigger">Competitor ships your planned feature first</div>
+        <div class="sc-outcome">
+          Your launch becomes reactive. Positioning shifts from bold to defensive before you've said a word.
+        </div>
+        <div class="sc-cost">You lose the narrative</div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="sc-num">03</div>
+        <div class="sc-trigger">Competitor pivots from enterprise to SMB</div>
+        <div class="sc-outcome">
+          Six new ads in seven days, CTA changed from "Book a Demo" to "Start Free Trial." You find out when a deal goes cold.
+        </div>
+        <div class="sc-cost">They're in your market. You didn't see it coming.</div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="sc-num">04</div>
+        <div class="sc-trigger">Competitor launches a LinkedIn campaign</div>
+        <div class="sc-outcome">
+          Sales discovers it three weeks later — after it's already captured mindshare with your target accounts.
+        </div>
+        <div class="sc-cost">You're defending instead of leading</div>
+      </div>
+
+    </div>
+
+    <div class="s3-footer">
+      Teams with proactive competitive intelligence consistently win more deals.<br>
+      <strong>Those without are always playing catch-up.</strong>
+    </div>
+  </div>
+
+<!-- ── SLIDE 4a — AI BUYER JOURNEY ───────────────────────── -->
+  <div class="slide s4a" data-index="0">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">4 / 13</div>
+
+    <!-- fully inline — no class dependencies, no animation opacity traps -->
+    <div style="position:absolute;inset:0;padding:72px 60px 40px;display:grid;grid-template-rows:auto 1fr auto;gap:18px;">
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1D1E21;line-height:1.25;">
+        Buyers Are Being Pre-Qualified by AI<br>Before They Ever Reach Your Team
+      </h2>
+
+      <div style="display:grid;grid-template-columns:210px 1fr;gap:20px;min-height:0;">
+
+        <!-- Left: stats -->
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="border-radius:14px;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);color:#fff;padding:22px 18px;flex:1;">
+            <div style="font-family:'Playfair Display',serif;font-size:50px;font-weight:900;line-height:1;letter-spacing:-2px;">60%</div>
+            <div style="font-size:11.5px;opacity:.9;line-height:1.5;margin-top:6px;">of LLM citations come from sources brands don't control — reviews, forums, earned media</div>
+          </div>
+          <div style="border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;padding:16px 18px;">
+            <div style="font-family:'Playfair Display',serif;font-size:34px;font-weight:900;line-height:1;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">83%</div>
+            <div style="font-size:11.5px;color:#6B7280;line-height:1.5;margin-top:4px;">of searches end without a click — AI answers before buyers reach your site</div>
+          </div>
+        </div>
+
+        <!-- Right: journey steps -->
+        <div style="display:flex;flex-direction:column;gap:10px;justify-content:center;">
+
+          <div style="display:flex;align-items:flex-start;gap:14px;border:1.5px solid #E5E7EB;border-radius:12px;padding:12px 16px;background:#F9FBFD;">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
+            <div>
+              <strong style="display:block;font-size:13px;font-weight:600;color:#1D1E21;margin-bottom:2px;">Buyer identifies a problem</strong>
+              <span style="font-size:11.5px;color:#6B7280;line-height:1.45;">They ask ChatGPT, Perplexity, or Google AI Mode — not a search bar</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:14px;border:1.5px solid rgba(252,38,66,.35);border-radius:12px;padding:12px 16px;background:#fff5f5;">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;box-shadow:0 2px 8px rgba(252,38,66,.35);">2</div>
+            <div>
+              <strong style="display:block;font-size:13px;font-weight:600;color:#FC2642;margin-bottom:2px;">LLM synthesises a shortlist from sources you don't control</strong>
+              <span style="font-size:11.5px;color:#6B7280;line-height:1.45;">Review sites, Reddit threads, analyst lists, earned media. Your competitor may already be on it.</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:14px;border:1.5px solid #E5E7EB;border-radius:12px;padding:12px 16px;background:#F9FBFD;">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
+            <div>
+              <strong style="display:block;font-size:13px;font-weight:600;color:#1D1E21;margin-bottom:2px;">Buyer compares with follow-up prompts</strong>
+              <span style="font-size:11.5px;color:#6B7280;line-height:1.45;">"How does X compare to Y?" — the narrative is forming before any demo is booked</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:14px;border:1.5px solid #E5E7EB;border-radius:12px;padding:12px 16px;background:#F9FBFD;">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
+            <div>
+              <strong style="display:block;font-size:13px;font-weight:600;color:#1D1E21;margin-bottom:2px;">They arrive with a decision nearly made</strong>
+              <span style="font-size:11.5px;color:#6B7280;line-height:1.45;">By the time Sales is involved, AI has already shaped the story — often in your competitor's favour</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:12px 18px;border-radius:10px;background:linear-gradient(135deg,rgba(252,38,66,.06),rgba(12,81,255,.06));border:1px solid rgba(252,38,66,.2);font-size:12.5px;color:#374151;line-height:1.5;">
+        <strong>The implication:</strong> monitoring what your competitors are doing is no longer enough. You need to know how they're being framed — in the sources AI trusts most.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4b — IL TRACKS THE INPUTS ────────────────────── -->
+  <div class="slide s4b" data-index="0">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">5 / 13</div>
+
+    <h2 class="slide-title">IndustryLens Monitors the Sources<br>That Shape AI Answers</h2>
+    <p class="s4b-sub">LLMs learn from reviews, news, social, and ads. We track all of it — so you see what AI sees about your competitors.</p>
+
+    <div class="sources-grid">
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">⭐</div>
+          <div class="src-name">Review Platforms</div>
+        </div>
+        <div class="src-desc">G2, Capterra, Trustpilot — the sources LLMs cite most when recommending software</div>
+        <div class="src-tag">High LLM citation weight</div>
+      </div>
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">📰</div>
+          <div class="src-name">News & Press</div>
+        </div>
+        <div class="src-desc">Earned media coverage that shapes category narratives and competitor credibility signals</div>
+        <div class="src-tag">High LLM citation weight</div>
+      </div>
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">📣</div>
+          <div class="src-name">Social Media</div>
+        </div>
+        <div class="src-desc">LinkedIn, Twitter, Instagram — real-time signals on messaging shifts and campaign themes</div>
+        <div class="src-tag blue">Narrative signal</div>
+      </div>
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">🎯</div>
+          <div class="src-name">Paid Advertising</div>
+        </div>
+        <div class="src-desc">Meta, Google, LinkedIn ads — reveals positioning pivots and budget allocation before it shows elsewhere</div>
+        <div class="src-tag blue">Early warning signal</div>
+      </div>
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">🌐</div>
+          <div class="src-name">Website & Messaging</div>
+        </div>
+        <div class="src-desc">Homepage, pricing, and feature page changes — the owned content layer that anchors LLM understanding</div>
+        <div class="src-tag blue">Positioning signal</div>
+      </div>
+
+      <div class="src-card">
+        <div class="src-card-head">
+          <div class="src-icon">💼</div>
+          <div class="src-name">Jobs & Team Signals</div>
+        </div>
+        <div class="src-desc">Hiring patterns and leadership moves that signal where competitors are investing next</div>
+        <div class="src-tag blue">Strategic signal</div>
+      </div>
+
+    </div>
+
+    <div class="s4b-footer">
+      <div class="s4b-footer-pill">The result</div>
+      You don't just know what competitors are doing. You see how they're being understood — and where you have the advantage.
+    </div>
+  </div>
+
+<!-- ── SLIDE 4 — WHY EXISTING SOLUTIONS FAIL ─────────── -->
+  <div class="slide s4" data-index="0">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">6 / 13</div>
+    <h2 class="slide-title">Why Not Just Use What You Already Have?</h2>
+    <div class="s4-grid">
+
+      <div class="pricing-card scale">
+        <div class="pc-name">IndustryLens</div>
+        <ul class="pc-features">
+          <li class="pc-feature">Real-time change detection</li>
+          <li class="pc-feature">0% hallucinations</li>
+          <li class="pc-feature">98% scrape accuracy</li>
+          <li class="pc-feature">Meta, Google &amp; LinkedIn ads</li>
+          <li class="pc-feature">Insights-first dashboard</li>
+          <li class="pc-feature">Live in &lt; 1 week</li>
+        </ul>
+        <button class="pc-cta cta-grad">Built exactly for this</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pc-name">ChatGPT / LLMs</div>
+        <ul class="pc-features pc-features-x">
+          <li class="pc-feature">No knowledge of recent competitor moves</li>
+          <li class="pc-feature">Can't scrape live ad channels</li>
+          <li class="pc-feature">Inconsistent, unverified outputs</li>
+          <li class="pc-feature">No ongoing monitoring or alerts</li>
+          <li class="pc-feature">Hallucinations passed off as intel</li>
+        </ul>
+        <button class="pc-cta cta-outline cta-red">Not built for this</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pc-name">Manual Research</div>
+        <ul class="pc-features pc-features-x">
+          <li class="pc-feature">Inconsistent across the team</li>
+          <li class="pc-feature">Highly time-consuming</li>
+          <li class="pc-feature">No systematic approach</li>
+          <li class="pc-feature">Outdated before it's done</li>
+          <li class="pc-feature">No change tracking — just snapshots</li>
+        </ul>
+        <button class="pc-cta cta-outline cta-red">Doesn't scale</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pc-name">Enterprise CI Tools</div>
+        <ul class="pc-features pc-features-x">
+          <li class="pc-feature">€20K–€100K+ per year</li>
+          <li class="pc-feature">Not built with AI-first architecture</li>
+          <li class="pc-feature">Complex dashboards, steep learning curve</li>
+          <li class="pc-feature">Requires dedicated analyst to run</li>
+          <li class="pc-feature">Overkill for most teams</li>
+        </ul>
+        <button class="pc-cta cta-outline cta-red">Too expensive. Too slow.</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5 — INTRODUCING INDUSTRYLENS ────────────── -->
+  <div class="slide s5" data-index="1">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">7 / 13</div>
+
+    <h2 class="slide-title">Introducing IndustryLens</h2>
+    <p class="s5-sub">Agentic AI that does the competitive research for you.</p>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="fc-title">Comprehensive Monitoring</div>
+        <div class="fc-desc">30+ data sources — website, ads, social, reviews, content, hiring, and pricing. Detects subtle competitive shifts before they become obvious.</div>
+        <div class="source-logos">
+          <span class="src-logo">LinkedIn</span>
+          <span class="src-logo">Meta</span>
+          <span class="src-logo">Google Ads</span>
+          <span class="src-logo">G2</span>
+          <span class="src-logo">Capterra</span>
+          <span class="src-logo">Glassdoor</span>
+          <span class="src-logo">YouTube</span>
+          <span class="src-logo">Twitter / X</span>
+          <span class="src-logo">Website</span>
+          <span class="src-logo">News</span>
+          <span class="src-logo">+ more</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="fc-title">Intelligent Filtering</div>
+        <div class="fc-desc">AI scores every signal by strategic relevance. Not every update matters — IndustryLens surfaces what does, across 12 insight categories.</div>
+        <div class="signal-pills">
+          <span class="sig-pill">Product Signals</span>
+          <span class="sig-pill">Ad Activity</span>
+          <span class="sig-pill">Messaging</span>
+          <span class="sig-pill">Positioning</span>
+          <span class="sig-pill">Market Moves</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="fc-title">Delivered Where You Work</div>
+        <div class="fc-desc">Intelligence that fits your team's existing environment. Not another platform to log into — integrated into the tools you already use.</div>
+        <div class="source-logos">
+          <span class="src-logo">Email digest</span>
+          <span class="src-logo">Dashboard</span>
+          <span class="src-logo">Slack</span>
+          <span class="src-logo">Monthly report</span>
+          <span class="src-logo">API</span>
+          <span class="src-logo">Battlecards</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6 — WHO WINS ─────────────────────────────── -->
+  <div class="slide sx6" data-index="2">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">8 / 13</div>
+
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;padding:68px 56px 36px;display:grid;grid-template-rows:auto 1fr;gap:20px;height:100%;">
+
+      <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1D1E21;line-height:1.25;">
+        Built for B2B SaaS Teams Who Move Fast
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;grid-template-rows:1fr;gap:14px;height:100%;">
+
+        <div style="position:relative;overflow:hidden;border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;padding:18px 16px 16px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#FC2642,#0C51FF);"></div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;padding-bottom:9px;margin-bottom:9px;border-bottom:1.5px solid #E5E7EB;">Marketing</div>
+          <div style="font-size:11.5px;color:#6B7280;line-height:1.55;font-style:italic;margin-bottom:10px;">Your competitor just pivoted their messaging. You're still running last quarter's positioning.</div>
+          <div style="height:1px;background:#E5E7EB;margin-bottom:9px;"></div>
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:7px;">With IndustryLens</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Spot competitor campaign pivots within days, not weeks</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Know which messages are gaining traction before they reach your pipeline</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Brief your team with context, not just raw screenshots</div>
+          </div>
+        </div>
+
+        <div style="position:relative;overflow:hidden;border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;padding:18px 16px 16px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#FC2642,#0C51FF);"></div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;padding-bottom:9px;margin-bottom:9px;border-bottom:1.5px solid #E5E7EB;">Sales</div>
+          <div style="font-size:11.5px;color:#6B7280;line-height:1.55;font-style:italic;margin-bottom:10px;">You're walking into deals blind. Competitors are in the room and you find out when you lose.</div>
+          <div style="height:1px;background:#E5E7EB;margin-bottom:9px;"></div>
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:7px;">With IndustryLens</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Battlecards updated automatically as competitors change</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Know their current pricing, positioning, and weaknesses</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Counter objections before prospects raise them</div>
+          </div>
+        </div>
+
+        <div style="position:relative;overflow:hidden;border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;padding:18px 16px 16px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#FC2642,#0C51FF);"></div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;padding-bottom:9px;margin-bottom:9px;border-bottom:1.5px solid #E5E7EB;">Product</div>
+          <div style="font-size:11.5px;color:#6B7280;line-height:1.55;font-style:italic;margin-bottom:10px;">You shipped a roadmap item and learned a competitor launched it two months earlier.</div>
+          <div style="height:1px;background:#E5E7EB;margin-bottom:9px;"></div>
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:7px;">With IndustryLens</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Track feature releases and job postings as early signals</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>See what reviewers are asking for on competitor G2 pages</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Build what the market needs, not what you assume</div>
+          </div>
+        </div>
+
+        <div style="position:relative;overflow:hidden;border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;padding:18px 16px 16px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#FC2642,#0C51FF);"></div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;padding-bottom:9px;margin-bottom:9px;border-bottom:1.5px solid #E5E7EB;">Leadership</div>
+          <div style="font-size:11.5px;color:#6B7280;line-height:1.55;font-style:italic;margin-bottom:10px;">Your team brings competitive intel to QBRs. It's always outdated, always incomplete.</div>
+          <div style="height:1px;background:#E5E7EB;margin-bottom:9px;"></div>
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:7px;">With IndustryLens</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Weekly digest lands before Monday's standup</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>One source of truth across Marketing, Sales, and Product</div>
+            <div style="font-size:11px;color:#374151;line-height:1.4;padding-left:12px;position:relative;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#FC2642,#0C51FF);display:block;"></span>Make strategic calls on current data, not last quarter's slides</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<!-- ── SLIDE 7 — HOW THE AI WORKS ───────────────────────── -->
+  <div class="slide s7" data-index="0" style="display:flex;flex-direction:column;align-items:center;padding:60px 60px 40px;background:#fff;">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">9 / 13</div>
+    <h2 style="font-size:26px;font-weight:700;color:#1D1E21;letter-spacing:-.5px;line-height:1.2;margin-bottom:36px;width:900px;text-align:left;align-self:center;">How the AI Works</h2>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:28px;width:940px;">
+
+      <!-- Pipeline track -->
+      <div style="display:flex;align-items:flex-start;position:relative;width:100%;padding-top:8px;">
+        <!-- Grey base line -->
+        <div style="position:absolute;top:36px;left:60px;right:60px;height:2px;background:#E5E7EB;z-index:0;"></div>
+        <!-- Gradient overlay line -->
+        <div style="position:absolute;top:36px;left:60px;width:calc(100% - 120px);height:2px;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);z-index:1;"></div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;z-index:2;">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(252,38,66,.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;text-align:center;line-height:1.3;">Scrape &amp;<br>Detect</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;z-index:2;">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(252,38,66,.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;text-align:center;line-height:1.3;">Signal<br>Analysis</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;z-index:2;">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(252,38,66,.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;text-align:center;line-height:1.3;">Filter &amp;<br>Categorise</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;z-index:2;">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FC2642 0%,#0C51FF 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(252,38,66,.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1D1E21;text-align:center;line-height:1.3;">Insight<br>Drafting</div>
+        </div>
+      </div>
+
+      <!-- Cards row -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;">
+        <div style="padding:20px 18px;border-radius:12px;border:1px solid #E5E7EB;background:#F9FBFD;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;">01</div>
+          <div style="font-size:13.5px;font-weight:700;color:#1D1E21;margin-bottom:6px;">Scrape &amp; Detect</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.6;">Monitors 30+ sources continuously. Identifies meaningful changes across website copy, ads, reviews, social, and job listings.</div>
+        </div>
+        <div style="padding:20px 18px;border-radius:12px;border:1px solid #E5E7EB;background:#F9FBFD;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;">02</div>
+          <div style="font-size:13.5px;font-weight:700;color:#1D1E21;margin-bottom:6px;">Signal Analysis</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.6;">Raw data transformed into strategic signals. Separates noise from movement that actually matters.</div>
+        </div>
+        <div style="padding:20px 18px;border-radius:12px;border:1px solid #E5E7EB;background:#F9FBFD;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;">03</div>
+          <div style="font-size:13.5px;font-weight:700;color:#1D1E21;margin-bottom:6px;">Filter &amp; Categorise</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.6;">Ranks insights by strategic importance. Categorises across 12 dimensions — pricing, ads, messaging, hiring, and more.</div>
+        </div>
+        <div style="padding:20px 18px;border-radius:12px;border:1px solid #E5E7EB;background:#F9FBFD;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;">04</div>
+          <div style="font-size:13.5px;font-weight:700;color:#1D1E21;margin-bottom:6px;">Insight Drafting</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.6;">Generates a clear brief: what changed, why it matters, and what your team should consider doing about it.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 9 — REAL CI EXAMPLES ───────────────────────── -->
+  <div class="slide sx9" data-index="2">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">10 / 13</div>
+
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;padding:68px 56px 36px;display:grid;grid-template-rows:auto auto 1fr;gap:12px;height:100%;">
+
+      <div style="flex-shrink:0;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1D1E21;line-height:1.25;margin-bottom:6px;">Real Competitive Intelligence Looks Like This</h2>
+        <p style="font-size:14px;color:#6B7280;line-height:1.5;">Signal → context → recommended action. Not just a data dump.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;gap:18px;height:100%;">
+        <div style="border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;display:flex;flex-direction:column;overflow:hidden;">
+          <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;background:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(252,38,66,.08);color:#FC2642;">Pricing Change</span>
+            <span style="margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#21759B;">W</span>Website</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#FF492C;">G2</span>G2</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#FF6D42;">C</span>Capterra</span></span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:12px;flex:1;">
+            <div style="font-size:13px;color:#374151;line-height:1.65;">EuroCode Labs removed their Starter tier and raised Professional pricing by 15%. Reviews published that same week cite affordability concerns from existing customers.</div>
+            <div style="padding:10px 12px;border-radius:8px;background:linear-gradient(135deg,rgba(252,38,66,.05),rgba(12,81,255,.05));border:1px solid rgba(252,38,66,.15);">
+              <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;">Recommended action</div>
+              <div style="font-size:11.5px;color:#374151;line-height:1.5;">Run a targeted campaign to their disgruntled customer base. Update battlecards to highlight your pricing stability and Starter plan availability.</div>
+            </div>
+          </div>
+        </div>
+        <div style="border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;display:flex;flex-direction:column;overflow:hidden;">
+          <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;background:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(12,81,255,.08);color:#0C51FF;">Ad Campaign</span>
+            <span style="margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#0A66C2;">in</span>LinkedIn</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#1877F2;">f</span>Meta</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#21759B;">W</span>Website</span></span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:12px;flex:1;">
+            <div style="font-size:13px;color:#374151;line-height:1.65;">Alpine Systems launched 6 new LinkedIn ads in 3 days pushing "no-code setup in 5 minutes" — a full downmarket pivot. CTA shifted from Book a Demo to Start Free Trial.</div>
+            <div style="padding:10px 12px;border-radius:8px;background:linear-gradient(135deg,rgba(252,38,66,.05),rgba(12,81,255,.05));border:1px solid rgba(252,38,66,.15);">
+              <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;">Recommended action</div>
+              <div style="font-size:11.5px;color:#374151;line-height:1.5;">Reinforce enterprise credibility in active deals. Alert Sales — Alpine may now appear in SMB pipeline. Brief the team before next week's calls.</div>
+            </div>
+          </div>
+        </div>
+        <div style="border:1.5px solid #E5E7EB;border-radius:14px;background:#F9FBFD;display:flex;flex-direction:column;overflow:hidden;">
+          <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;background:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(27,158,75,.08);color:#1B9E4B;">Content Shift</span>
+            <span style="margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#21759B;">W</span>Website</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#0A66C2;">in</span>LinkedIn</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;border:1px solid #E5E7EB;background:#fff;font-size:11px;font-weight:600;color:#374151;"><span style="width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;background:#FF0000;">▶</span>YouTube</span></span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:12px;flex:1;">
+            <div style="font-size:13px;color:#374151;line-height:1.65;">TechFlow increased blog output 200% over 4 weeks — all targeting "remote team productivity." Zero coverage of this topic in the prior 6 months. Three new content writer roles posted simultaneously.</div>
+            <div style="padding:10px 12px;border-radius:8px;background:linear-gradient(135deg,rgba(252,38,66,.05),rgba(12,81,255,.05));border:1px solid rgba(252,38,66,.15);">
+              <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,#FC2642,#0C51FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;">Recommended action</div>
+              <div style="font-size:11.5px;color:#374151;line-height:1.5;">Assess your own coverage of remote productivity. TechFlow is 4 weeks ahead and accelerating. Consider a direct response asset targeting the same audience before they own the narrative.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<!-- ── SLIDE 10 — DELIVERY + GETTING STARTED ────────────── -->
+  <div class="slide s10" data-index="0">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">11 / 13</div>
+
+    <div class="s10-left">
+      <h2 class="slide-title">From Signup to<br>First Insights in 7 Days</h2>
+
+      <div class="delivery-list">
+        <div class="delivery-item">
+          <div class="di-title">Weekly Digests</div>
+          <div class="di-desc">Prioritised insights on the most important competitive moves. Scan in 3 minutes or dive deeper.</div>
+        </div>
+        <div class="delivery-item">
+          <div class="di-title">Dashboard</div>
+          <div class="di-desc">Real-time competitive view by competitor, category, or timeframe. Includes battlecards for Sales.</div>
+        </div>
+        <div class="delivery-item">
+          <div class="di-title">Monthly Reports</div>
+          <div class="di-desc">Strategic overview of trends, pattern shifts, and emerging threats across your competitive landscape.</div>
+        </div>
+        <div class="delivery-item">
+          <div class="di-title">Integrations</div>
+          <div class="di-desc">Slack, Teams, and API — intelligence delivered directly into your existing workflows.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s10-right">
+      <div class="timeline-label">How it works</div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-day">Day 1</div>
+            <div class="tl-text">Provide your competitor list — 3 to 5 companies to start</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-day">Days 2–6</div>
+            <div class="tl-text">We index historical data and calibrate the AI to your market</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-day">Day 7</div>
+            <div class="tl-text">First insights delivered — dashboard live, weekly digest sent</div>
+            <div><span class="tl-badge badge-email">Email</span> <span class="tl-badge badge-dash">Dashboard</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-day">Day 30</div>
+            <div class="tl-text">First monthly competitive intelligence report</div>
+            <div><span class="tl-badge badge-report">Report</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-cta">
+        <strong>Zero setup. Zero learning curve.</strong><br>
+        First insights in a week.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 11 — PRICING ────────────────────────────────── -->
+  <div class="slide s11" data-index="1">
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">12 / 13</div>
+
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pc-name">Starter</div>
+        <div class="pc-price">
+          <span class="pc-price-num">€75</span>
+          <span class="pc-price-per">/ month</span>
+        </div>
+        <span class="pc-competitors">3 competitors tracked</span>
+        <ul class="pc-features">
+          <li class="pc-feature">Historical data insights</li>
+          <li class="pc-feature">Website monitoring</li>
+          <li class="pc-feature">Paid media monitoring</li>
+          <li class="pc-feature">Social media monitoring</li>
+          <li class="pc-feature">Review monitoring</li>
+          <li class="pc-feature">Dashboard access</li>
+          <li class="pc-feature">Weekly actionable insights</li>
+        </ul>
+        <button class="pc-cta cta-outline">Get started</button>
+      </div>
+
+      <div class="pricing-card scale">
+        <div class="pc-name">Scale</div>
+        <div class="pc-price">
+          <span class="pc-price-num">€150</span>
+          <span class="pc-price-per">/ month</span>
+        </div>
+        <span class="pc-competitors">Up to 6 competitors</span>
+        <ul class="pc-features">
+          <li class="pc-feature">Everything in Starter</li>
+          <li class="pc-feature">Role-based insights</li>
+          <li class="pc-feature">Slack / Teams integration</li>
+          <li class="pc-feature">Monthly advanced reports</li>
+          <li class="pc-feature">Priority email support</li>
+        </ul>
+        <button class="pc-cta cta-grad">Get started</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pc-name">Professional</div>
+        <div class="pc-price">
+          <span class="pc-price-num">€250</span>
+          <span class="pc-price-per">/ month</span>
+        </div>
+        <span class="pc-competitors">Up to 10 competitors</span>
+        <ul class="pc-features">
+          <li class="pc-feature">Everything in Scale</li>
+          <li class="pc-feature">Managed onboarding</li>
+          <li class="pc-feature">Monthly &amp; quarterly reports</li>
+          <li class="pc-feature">API access</li>
+          <li class="pc-feature">Dedicated account manager</li>
+        </ul>
+        <button class="pc-cta cta-outline">Get started</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 12 — FINAL CTA ──────────────────────────────── -->
+  <div class="slide s12" data-index="2">
+    <div class="s12-lines"></div>
+    <div class="s12-glow-r"></div>
+    <div class="s12-glow-b"></div>
+
+    <div class="slide-logo"><div class="logo-mark">IL</div><span class="logo-name">IndustryLens</span></div>
+    <div class="slide-num">13 / 13</div>
+
+    <h2 class="s12-headline">
+      Ready to Make Decisions<br>with <em>Full Competitive Context?</em>
+    </h2>
+    <p class="s12-sub">No setup. No credit card. First insights in 7 days.</p>
+    <button class="s12-btn">Start a Free Trial</button>
+    <p class="s12-micro">Takes less than 5 minutes to get started</p>
+    <p class="s12-url">industry-lens.com</p>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button class="nav-btn" id="prev" onclick="go(-1)" disabled>&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <span class="nav-count" id="count">1 / 13</span>
+  <button class="nav-btn" id="next" onclick="go(1)">&#8594;</button>
+</div>
+<div class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>Space</kbd> advance</div>
+
+<script>
+const slides = document.querySelectorAll('#deck > .slide');
+const total  = slides.length;
+let cur = 0;
+
+slides.forEach((s,i) => {
+  s.classList.remove('active','exit');
+  if(i===0) s.classList.add('active');
+});
+
+const dotsEl = document.getElementById('dots');
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' on':'');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  if(n===cur) return;
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('exit');
+  setTimeout(() => slides[cur]?.classList.remove('exit'), 600);
+  cur = n;
+  slides[cur].classList.add('active');
+  sync();
+}
+function go(d) { goTo(Math.max(0, Math.min(total-1, cur+d))); }
+function sync() {
+  document.getElementById('count').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('prev').disabled = cur===0;
+  document.getElementById('next').disabled = cur===total-1;
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('on', i===cur));
+}
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight' || e.key===' ') { e.preventDefault(); go(1); }
+  if(e.key==='ArrowLeft') { e.preventDefault(); go(-1); }
+});
+sync();
+document.body.classList.add('deck-ready');
+
+// Scale deck to fill viewport while preserving 16:9
+const DESIGN_W = 1280, DESIGN_H = 720;
+function scaleDeck() {
+  const scaleX = window.innerWidth  / DESIGN_W;
+  const scaleY = window.innerHeight / DESIGN_H;
+  const scale  = Math.min(scaleX, scaleY);
+  const deck   = document.getElementById('deck');
+  const offsetX = (window.innerWidth  - DESIGN_W * scale) / 2;
+  const offsetY = (window.innerHeight - DESIGN_H * scale) / 2;
+  deck.style.width     = DESIGN_W + 'px';
+  deck.style.height    = DESIGN_H + 'px';
+  deck.style.position  = 'absolute';
+  deck.style.top       = '0';
+  deck.style.left      = '0';
+  deck.style.transformOrigin = '0 0';
+  deck.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+scaleDeck();
+window.addEventListener('resize', scaleDeck);
+
+</script>
+</body>
+</html>
