@@ -271,18 +271,9 @@
 </footer>
 
 <script>
-  const EDGE_FN='https://lmgzpvpkztnmqipzrnmf.supabase.co/functions/v1/msp-lead-capture';
+  const N8N_WEBHOOK='https://industrylens.app.n8n.cloud/webhook/msp-lead-capture';
   const params=new URLSearchParams(window.location.search);
   const UTM={source:params.get('utm_source')||'',medium:params.get('utm_medium')||'',campaign:params.get('utm_campaign')||'msp_q1_2026',content:params.get('utm_content')||'',ref:params.get('ref')||''};
-  let leadId=null;
-
-  async function trackPageView(){
-    try{
-      const res=await fetch(EDGE_FN,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'page_view',payload:{ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content,landing_page_url:window.location.href}})});
-      const data=await res.json();
-      if(data&&data.id){leadId=data.id;sessionStorage.setItem('il_lead_id',leadId);}
-    }catch(e){console.warn('tracking error',e);}
-  }
 
   const FREE=['gmail','googlemail','yahoo','ymail','rocketmail','hotmail','live','msn','outlook','icloud','me','mac','protonmail','proton','gmx','web','aol','aim','mail','yandex','zoho','tutanota','tutamail','tuta','fastmail','hushmail','guerrillamail','sharklasers','mailinator','tempmail','throwam','dispostable','mailnull','spamgourmet','trashmail','discard','spamex','spambox'];
   function isPersonal(email){const domain=email.split('@')[1]?.split('.')[0]?.toLowerCase();return FREE.includes(domain);}
@@ -298,17 +289,15 @@
     if(!email||!email.includes('@')){emailEl.classList.add('error');errEl.textContent='Please enter a valid email address.';errEl.classList.add('show');return;}
     if(isPersonal(email)){emailEl.classList.add('error');errEl.classList.add('show');return;}
     btn.textContent='Sending...';btn.classList.add('loading');
-    if(!leadId)leadId=sessionStorage.getItem('il_lead_id');
     try{
-      await fetch(EDGE_FN,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'form_submit',payload:{id:leadId,name,email}})});
+      fetch(N8N_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content,landing_page_url:window.location.href})}).catch(()=>{});
     }catch(e){console.warn(e);}
-    const tyParams=new URLSearchParams({lid:leadId||'',ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content});
+    const tyParams=new URLSearchParams({ref:UTM.ref,utm_source:UTM.source,utm_medium:UTM.medium,utm_campaign:UTM.campaign,utm_content:UTM.content});
     window.location.href=`/msp-snapshot-thankyou?${tyParams.toString()}`;
   }
 
   const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.06});
   document.querySelectorAll('.on-scroll').forEach(el=>obs.observe(el));
-  trackPageView();
 </script>
 </body>
 </html>
